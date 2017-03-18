@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#c196d2"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/imageView1"
+        android:src="@drawable/mainlogo"/>
+
+    <Button
+        android:text="여자"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button5"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="45dp"
+        android:id="@+id/button6" />
+
+    <TextView
+        android:text="성별을 선택하세요"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button6"
+        android:layout_alignStart="@+id/button5"
+        android:layout_marginBottom="11dp"
+        android:id="@+id/textView"
+        android:layout_alignEnd="@+id/button5" />
+
+    <EditText
+        android:id="@+id/EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button5"
+        android:layout_marginTop="58dp"
+        android:layout_alignEnd="@+id/button6"
+        android:layout_alignStart="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="팀 이름은?"
+        android:layout_marginTop="24dp"
+
+        android:layout_below="@+id/button5"
+        android:layout_alignStart="@+id/button5" />
+
+    <TextView
+        android:text="몇명이서 노세요?"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/EditText" />
+
+    <Spinner
+        android:entries="array/people"
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_alignEnd="@+id/EditText"></Spinner>
+
+    <Button
+        android:text="앞으로"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_alignEnd="@+id/button5"
+        android:layout_marginTop="39dp"
+        android:id="@+id/button7" />
+
+    <Button
+        android:text="다음으로"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button7"
+        android:layout_alignStart="@+id/button6"
+        android:id="@+id/button8" />
+
+    <Button
+        android:text="남자"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:id="@+id/button5"
+        android:layout_below="@+id/imageView1"
+        android:layout_alignStart="@+id/textView3" />
+</RelativeLayout>
