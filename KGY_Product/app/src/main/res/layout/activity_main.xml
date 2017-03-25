@@ -38,7 +38,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="서울"
-            android:id="@+id/button"
+            android:id="@+id/btnSelectPlace0"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="35dp"
@@ -48,8 +48,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="경기한강이북"
-            android:id="@+id/button3"
-            android:layout_alignTop="@+id/button"
+            android:id="@+id/btnSelectPlace1"
+            android:layout_alignTop="@+id/btnSelectPlace0"
             android:layout_centerHorizontal="true" />
 
         <Button
@@ -57,9 +57,9 @@
             android:layout_height="50dp"
             android:text="경기한강이남"
             android:layout_marginEnd="33dp"
-            android:id="@+id/button2"
-            android:layout_alignBaseline="@+id/button3"
-            android:layout_alignBottom="@+id/button3"
+            android:id="@+id/btnSelectPlace2"
+            android:layout_alignBaseline="@+id/btnSelectPlace1"
+            android:layout_alignBottom="@+id/btnSelectPlace1"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>
