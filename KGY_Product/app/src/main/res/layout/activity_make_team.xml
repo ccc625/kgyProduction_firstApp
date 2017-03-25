@@ -70,7 +70,7 @@
     <Spinner
         android:entries="array/people"
         android:id="@+id/spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"></Spinner>
 
@@ -95,7 +95,8 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"/>
     </LinearLayout>
 
 </LinearLayout>
