@@ -10,7 +10,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:id="@+id/imageView1"
         android:src="@drawable/mainlogo"/>
 
     <TextView
@@ -54,7 +53,7 @@
         android:layout_marginTop="30dp"/>
 
     <EditText
-        android:id="@+id/EditText"
+        android:id="@+id/txtTeamName"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="5dp" />
@@ -72,30 +71,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"></Spinner>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btnPrev"
-            android:text="앞으로"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btnNext"
-            android:text="다음으로"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"/>
-    </LinearLayout>
 
 </LinearLayout>
