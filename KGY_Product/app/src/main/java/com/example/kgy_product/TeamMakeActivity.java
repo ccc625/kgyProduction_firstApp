@@ -16,9 +16,6 @@ import android.widget.RadioButton;
 
 public class TeamMakeActivity extends AppCompatActivity
 {
-    private Button btnMan;
-    private Button btnWoman;
-
     private EditText txtTeamName;
     private Spinner memberCountSpinner;
 
@@ -62,8 +59,8 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initDisplayObject()
     {
-        btnMan = (Button) findViewById(R.id.btnMan);
-        btnWoman = (Button) findViewById(R.id.btnWoman);
+        btnMan = (RadioButton) findViewById(R.id.btnMan);
+        btnWoman = (RadioButton) findViewById(R.id.btnWoman);
 
         txtTeamName = (EditText) findViewById(R.id.txtTeamName);
         memberCountSpinner = (Spinner) findViewById(R.id.memberCountSpinner);
@@ -74,29 +71,15 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initListener()
     {
-        buttonClickListener = new View.OnClickListener()
-        {
+        buttonClickListener = new View.OnClickListener() {
             @Override
-            public void onClick( View view )
-            {
-                if( view.getId() == btnMan.getId() )
-                {
+            public void onClick(View view) {
+                if (view.getId() == btnMan.getId()) {
 
-                }
-                else if( view.getId() == btnWoman.getId() )
-                {
+                } else if (view.getId() == btnWoman.getId()) {
 
                 }
             }
         };
-    private void init()
-    {
-        initDisplayObject();
-
-    }
-    private void initDisplayObject()
-    {
-        btnPrev = (Button) findViewById(R.id.btnPrev);
-        btnNext = (Button) findViewById(R.id.btnNext);
     }
 }
