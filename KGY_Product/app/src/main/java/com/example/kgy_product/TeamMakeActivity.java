@@ -16,10 +16,13 @@ import android.widget.RadioButton;
 
 public class TeamMakeActivity extends AppCompatActivity
 {
+    private LinearLayout lMakeTeam;
+
     private EditText txtTeamName;
     private Spinner memberCountSpinner;
 
-    private BottomLayout bottomLayout;
+    private LinearLayout bottomLayout;
+    private LinearLayout makeTeamLayout;
 
     private View.OnClickListener buttonClickListener;
 
@@ -59,14 +62,21 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initDisplayObject()
     {
-        btnMan = (RadioButton) findViewById(R.id.btnMan);
-        btnWoman = (RadioButton) findViewById(R.id.btnWoman);
+//        btnMan = (RadioButton) findViewById(R.id.btnMan);
+//        btnWoman = (RadioButton) findViewById(R.id.btnWoman);
+//
+//        txtTeamName = (EditText) findViewById(R.id.txtTeamName);
+//        memberCountSpinner = (Spinner) findViewById(R.id.memberCountSpinner);
 
-        txtTeamName = (EditText) findViewById(R.id.txtTeamName);
-        memberCountSpinner = (Spinner) findViewById(R.id.memberCountSpinner);
+        lMakeTeam = ( LinearLayout ) findViewById( R.id.lMakeTeam );
 
-        bottomLayout = new BottomLayout(this);
-        addContentView( bottomLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
+        makeTeamLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.make_team_layout, null );
+        lMakeTeam.addView( makeTeamLayout );
+//        addContentView( makeTeamLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
+
+        bottomLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.bottom_layout, null );
+        lMakeTeam.addView( bottomLayout );
+//        addContentView( bottomLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
     }
 
     private void initListener()
@@ -81,5 +91,8 @@ public class TeamMakeActivity extends AppCompatActivity
                 }
             }
         };
+
+//        btnMan.setOnClickListener( buttonClickListener );
+//        btnWoman.setOnClickListener( buttonClickListener );
     }
 }
