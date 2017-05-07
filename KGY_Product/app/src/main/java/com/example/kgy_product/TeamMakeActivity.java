@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -24,8 +25,9 @@ public class TeamMakeActivity extends AppCompatActivity
     private LinearLayout bottomLayout;
     private LinearLayout makeTeamLayout;
 
-    private View.OnClickListener buttonClickListener;
+    private RadioGroup.OnCheckedChangeListener checkedChangeListener;
 
+    private RadioGroup selectGender;
     private RadioButton btnMan;
     private RadioButton btnWoman;
     private Button btnPrev;
@@ -62,8 +64,6 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initDisplayObject()
     {
-//        btnMan = (RadioButton) findViewById(R.id.btnMan);
-//        btnWoman = (RadioButton) findViewById(R.id.btnWoman);
 //
 //        txtTeamName = (EditText) findViewById(R.id.txtTeamName);
 //        memberCountSpinner = (Spinner) findViewById(R.id.memberCountSpinner);
@@ -72,6 +72,12 @@ public class TeamMakeActivity extends AppCompatActivity
 
         makeTeamLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.make_team_layout, null );
         lMakeTeam.addView( makeTeamLayout );
+
+        selectGender = ( RadioGroup ) makeTeamLayout.findViewById( R.id.selectGender );
+
+        btnMan = (RadioButton) makeTeamLayout.findViewById(R.id.btnMan);
+        btnWoman = (RadioButton) makeTeamLayout.findViewById(R.id.btnWoman);
+
 //        addContentView( makeTeamLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
 
         bottomLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.bottom_layout, null );
@@ -81,18 +87,22 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initListener()
     {
-        buttonClickListener = new View.OnClickListener() {
+        checkedChangeListener = new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onClick(View view) {
-                if (view.getId() == btnMan.getId()) {
-
-                } else if (view.getId() == btnWoman.getId()) {
-
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                if( checkedId == btnMan.getId() )
+                {
+                    System.out.println("btnMan touched");
+                }
+                else if( checkedId == btnWoman.getId() )
+                {
+                    System.out.println("btnWoman touched");
                 }
             }
         };
 
-//        btnMan.setOnClickListener( buttonClickListener );
-//        btnWoman.setOnClickListener( buttonClickListener );
+        selectGender.setOnCheckedChangeListener( checkedChangeListener );
     }
 }
