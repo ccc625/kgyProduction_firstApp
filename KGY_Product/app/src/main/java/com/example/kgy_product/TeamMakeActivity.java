@@ -17,6 +17,8 @@ import android.widget.RadioButton;
 
 public class TeamMakeActivity extends AppCompatActivity
 {
+    private static final int MODE_MIN = 101;
+    private static final int MODE_MAX = 102;
     private static final int MODE_MAKE_TEAM = 101;
     private static final int MODE_INFO_TEAM = 102;
 
@@ -30,6 +32,7 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private BottomLayout bottomLayout;
     private MakeTeamLayout makeTeamLayout;
+    private TeamInfoLayout teamInfoLayout;
 
     private int currentMode;
 
@@ -78,16 +81,11 @@ public class TeamMakeActivity extends AppCompatActivity
         lMakeTeam.addView( bottomLayout );
     }
 
-    private void addBottomLayout()
-    {
-        if( bottomLayout == null )
-            initBottomLayout();
-
-        lMakeTeam.addView( bottomLayout );
-    }
-
     private void setMode( int mode )
     {
+        if( lMakeTeam.getChildCount() >= 3 )
+            lMakeTeam.removeViewAt( CONTENT_INDEX );
+
         switch( mode )
         {
             case MODE_MAKE_TEAM :
@@ -96,6 +94,9 @@ public class TeamMakeActivity extends AppCompatActivity
                 lMakeTeam.addView( makeTeamLayout, CONTENT_INDEX );
                 break;
             case MODE_INFO_TEAM :
+                if( teamInfoLayout == null )
+                    teamInfoLayout = new TeamInfoLayout(this);
+                lMakeTeam.addView( teamInfoLayout, CONTENT_INDEX );
                 break;
         }
     }
@@ -107,12 +108,20 @@ public class TeamMakeActivity extends AppCompatActivity
             public void onClickPrevButton()
             {
                 System.out.println("btnPrev");
+                if( currentMode > MODE_MIN )
+                    currentMode -= 1;
+
+                setMode( currentMode );
             }
 
             @Override
             public void onClickNextButton()
             {
                 System.out.println("btnNext");
+                if( currentMode < MODE_MAX )
+                    currentMode += 1;
+
+                setMode( currentMode );
             }
         };
 
