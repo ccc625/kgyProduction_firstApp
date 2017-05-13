@@ -17,22 +17,23 @@ import android.widget.RadioButton;
 
 public class TeamMakeActivity extends AppCompatActivity
 {
+    private static final int MODE_MAKE_TEAM = 101;
+    private static final int MODE_INFO_TEAM = 102;
+
+    private static final int CONTENT_INDEX = 1;
+    private static final int BOTTOM_INDEX = 2;
+
     private LinearLayout lMakeTeam;
 
     private EditText txtTeamName;
     private Spinner memberCountSpinner;
 
-    private LinearLayout bottomLayout;
-    private LinearLayout makeTeamLayout;
+    private BottomLayout bottomLayout;
+    private MakeTeamLayout makeTeamLayout;
 
-    private RadioGroup.OnCheckedChangeListener checkedChangeListener;
+    private int currentMode;
 
-    private RadioGroup selectGender;
-    private RadioButton btnMan;
-    private RadioButton btnWoman;
-    private Button btnPrev;
-    private Button btnNext;
-    String[] items={"1명","2명","3명","4명","5명 ","6명"};
+    private BottomLayout.ButtonCallback bottomButtonListener;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -45,9 +46,6 @@ public class TeamMakeActivity extends AppCompatActivity
     @Override
     protected void onDestroy()
     {
-        btnMan = null;
-        btnWoman = null;
-
         txtTeamName = null;
         memberCountSpinner = null;
 
@@ -58,51 +56,66 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void init()
     {
+        currentMode = 101;
+
         initDisplayObject();
         initListener();
     }
 
     private void initDisplayObject()
     {
-//
-//        txtTeamName = (EditText) findViewById(R.id.txtTeamName);
-//        memberCountSpinner = (Spinner) findViewById(R.id.memberCountSpinner);
-
         lMakeTeam = ( LinearLayout ) findViewById( R.id.lMakeTeam );
 
-        makeTeamLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.make_team_layout, null );
-        lMakeTeam.addView( makeTeamLayout );
+        initBottomLayout();
 
-        selectGender = ( RadioGroup ) makeTeamLayout.findViewById( R.id.selectGender );
+        setMode( currentMode );
+    }
 
-        btnMan = (RadioButton) makeTeamLayout.findViewById(R.id.btnMan);
-        btnWoman = (RadioButton) makeTeamLayout.findViewById(R.id.btnWoman);
-
-//        addContentView( makeTeamLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
-
-        bottomLayout = ( LinearLayout ) getLayoutInflater().inflate( R.layout.bottom_layout, null );
+    private void initBottomLayout()
+    {
+        if( bottomLayout == null )
+            bottomLayout = new BottomLayout(this);
         lMakeTeam.addView( bottomLayout );
-//        addContentView( bottomLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT) );
+    }
+
+    private void addBottomLayout()
+    {
+        if( bottomLayout == null )
+            initBottomLayout();
+
+        lMakeTeam.addView( bottomLayout );
+    }
+
+    private void setMode( int mode )
+    {
+        switch( mode )
+        {
+            case MODE_MAKE_TEAM :
+                if( makeTeamLayout == null )
+                    makeTeamLayout = new MakeTeamLayout(this);
+                lMakeTeam.addView( makeTeamLayout, CONTENT_INDEX );
+                break;
+            case MODE_INFO_TEAM :
+                break;
+        }
     }
 
     private void initListener()
     {
-        checkedChangeListener = new RadioGroup.OnCheckedChangeListener()
-        {
+        bottomButtonListener = new BottomLayout.ButtonCallback() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
+            public void onClickPrevButton()
             {
-                if( checkedId == btnMan.getId() )
-                {
-                    System.out.println("btnMan touched");
-                }
-                else if( checkedId == btnWoman.getId() )
-                {
-                    System.out.println("btnWoman touched");
-                }
+                System.out.println("btnPrev");
+            }
+
+            @Override
+            public void onClickNextButton()
+            {
+                System.out.println("btnNext");
             }
         };
 
-        selectGender.setOnCheckedChangeListener( checkedChangeListener );
+        bottomLayout.setButtonCallback( bottomButtonListener );
     }
 }

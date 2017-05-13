@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 
 public class BottomLayout extends LinearLayout
 {
+    private Context mContext;
+
+    private LinearLayout rootLayout;
     private Button btnPrev;
     private Button btnNext;
 
@@ -22,6 +25,7 @@ public class BottomLayout extends LinearLayout
     {
         super(context);
 
+        mContext = context;
         init();
     }
 
@@ -34,9 +38,12 @@ public class BottomLayout extends LinearLayout
     @Override
     protected void onDetachedFromWindow()
     {
-        buttonCallback = null;
-
         super.onDetachedFromWindow();
+    }
+
+    public void dispose()
+    {
+        ///TODO @jimin 객체 비워
     }
 
     public void setButtonCallback( ButtonCallback callback )
@@ -52,8 +59,11 @@ public class BottomLayout extends LinearLayout
 
     private void initDisplayObject()
     {
-        btnPrev = (Button) findViewById(R.id.btnPrev);
-        btnNext = (Button) findViewById(R.id.btnNext);
+        rootLayout = (LinearLayout) inflate(mContext, R.layout.bottom_layout, null);
+        addView( rootLayout, new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT ) );
+
+        btnPrev = (Button) rootLayout.findViewById(R.id.btnPrev);
+        btnNext = (Button) rootLayout.findViewById(R.id.btnNext);
     }
 
     private void initListener()
