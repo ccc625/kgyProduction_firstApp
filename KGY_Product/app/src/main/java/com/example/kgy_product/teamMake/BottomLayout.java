@@ -1,9 +1,11 @@
-package com.example.kgy_product;
+package com.example.kgy_product.teamMake;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.example.kgy_product.R;
 
 /**
  * Created by ccc62 on 2017-04-01.

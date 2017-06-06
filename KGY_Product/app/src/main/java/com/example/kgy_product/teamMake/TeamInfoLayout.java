@@ -1,9 +1,11 @@
-package com.example.kgy_product;
+package com.example.kgy_product.teamMake;
 
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import com.example.kgy_product.R;
 
 /**
  * Created by ccc62 on 2017-05-13.
