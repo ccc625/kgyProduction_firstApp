@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+   android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.androidtown.myapplication.MainActivity">
+    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="20dp" android:text="애니메이션 텍스트" android:id="@+id/textView1"/>
+    <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="20dp" android:text="시작 " android:id="@+id/startButton" android:onClick="onButton1Clicked" android:padding="4dp"/>
+
+</LinearLayout>
+</LinearLayout>
