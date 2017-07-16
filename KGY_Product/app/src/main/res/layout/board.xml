@@ -46,22 +46,27 @@
 
     <EditText
 
-        android:id="@+id/edit"
+        android:id="@+id/editTextNew"
         android:layout_width="200dp"
         android:layout_height="50dp" />
 
     <Button
         android:text="입력"
-        android:id="@+id/button1"
+        android:id="@+id/buttonAdd"
         android:layout_width="50dp"
         android:layout_height="50dp" />
+
+
+
+
    </LinearLayout>
     
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#ffcc22">
+        android:divider="#ffcc22"
+        android:choiceMode="singleChoice" >
 
     </ListView>
 </LinearLayout>
