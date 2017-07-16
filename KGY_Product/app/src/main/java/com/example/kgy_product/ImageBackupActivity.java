@@ -26,7 +26,7 @@ public class ImageBackupActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity6_main);
+        setContentView(R.layout.board);
         task = new back();
 
 
