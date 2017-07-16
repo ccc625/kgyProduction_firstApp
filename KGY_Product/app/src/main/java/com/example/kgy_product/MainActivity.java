@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kgy_product.networkTask.NetworkTask;
+
 public class MainActivity extends AppCompatActivity
 {
     private Button btnSelectPlace0;
@@ -26,6 +28,11 @@ public class MainActivity extends AppCompatActivity
     {
         initDisplayObject();
         initListener();
+
+        String url = "http://172.30.1.41:8080/kgy";
+
+        NetworkTask networkTask = new NetworkTask(url, null);
+        networkTask.execute();
     }
 
     private void initDisplayObject()
