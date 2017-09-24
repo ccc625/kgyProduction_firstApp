@@ -2,6 +2,11 @@ package com.example.kgy_product.networkTask;
 
 import android.content.ContentValues;
 import android.os.AsyncTask;
+import android.util.JsonReader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 /**
  * Created by ccc62 on 2017-07-02.
@@ -10,12 +15,14 @@ import android.os.AsyncTask;
 public class NetworkTask extends AsyncTask<Void, Void, String>
 {
     private String url;
-    private ContentValues values;
+    private String values;
+    private NetworkCallback callback;
 
-    public NetworkTask(String url, ContentValues values)
+    public NetworkTask(String url, String values, NetworkCallback callback)
     {
         this.url = url;
         this.values = values;
+        this.callback = callback;
     }
 
     @Override
@@ -32,6 +39,22 @@ public class NetworkTask extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        System.out.println(s);
+        JSONObject data = null;
+        try
+        {
+            data = new JSONObject(s);
+        }
+        catch( JSONException exeption )
+        {
+            exeption.printStackTrace();
+        }
+
+
+        this.callback.onResponse( data );
+    }
+
+    public interface NetworkCallback
+    {
+        void onResponse( JSONObject data );
     }
 }

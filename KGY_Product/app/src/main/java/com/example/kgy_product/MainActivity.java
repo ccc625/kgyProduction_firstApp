@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kgy_product.networkTask.AmfAdaptor;
 import com.example.kgy_product.networkTask.NetworkTask;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -29,10 +33,15 @@ public class MainActivity extends AppCompatActivity
         initDisplayObject();
         initListener();
 
-        String url = "http://172.30.1.41:8080/kgy";
+        AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                System.out.println( data );
+            }
+        };
 
-        NetworkTask networkTask = new NetworkTask(url, null);
-        networkTask.execute();
+        AmfAdaptor.instance().initUser( callback, "tokenToKen");
     }
 
     private void initDisplayObject()
