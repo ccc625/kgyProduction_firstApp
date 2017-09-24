@@ -1,16 +1,10 @@
 package com.example.kgy_product.networkTask;
 
-import android.content.ContentValues;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,30 +88,73 @@ public class AmfAdaptor
             }
         };
 
-        requestMethod(ServerMethod.init, serverCallback, token);
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put("token", token);
+
+//        requestMethod(ServerMethod.initUser, serverCallback, map);
     }
 
-    private void requestMethod( String serverMethod, final ServerCallback callback, String... params)
+    public void registerUser(final AmfCallback callback, String name, String age, String empId)
+    {
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                callback.onResponse( data );
+            }
+        };
+
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put("name", name);
+        map.put("age", age);
+        map.put("emp_id", empId);
+
+//        requestMethod(ServerMethod.registerUser, serverCallback, map);
+    }
+
+    public void openSampleList4(final AmfCallback callback, String name, String age, String empId)
+    {
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                callback.onResponse( data );
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            jsonObject.put("name", name);
+            jsonObject.put("age", age);
+            jsonObject.put("emp_id", empId);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+//        JSONObject jsonData = new JSONObject();
+//        try
+//        {
+//            jsonData.put("empVo", jsonObject);
+//        }
+//        catch (JSONException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+        requestMethod(ServerMethod.openSampleList4, serverCallback, jsonObject.toString());
+    }
+
+    private void requestMethod( String serverMethod, final ServerCallback callback, String data)
     {
         String dest = "";
         String serviceName = getServiceName( serverMethod );
 
-        dest = ServerConfig.DEST + "/" + serviceName + "/" + serverMethod + ".do";
-
-        JSONArray jsonParams = new JSONArray();
-        for( int i= 0; i < params.length; i++ )
-        {
-            try
-            {
-                jsonParams.put(i, params[i]);
-            }
-            catch( JSONException exeption )
-            {
-                exeption.printStackTrace();
-            }
-        }
-
-        String strParam = jsonParams.toString();
+        dest = ServerConfig.LOCAL + "/" + serviceName + "/" + serverMethod + ".do";
 
         NetworkTask.NetworkCallback networkCallback = new NetworkTask.NetworkCallback() {
             @Override
@@ -135,7 +172,7 @@ public class AmfAdaptor
             }
         };
 
-        NetworkTask networkTask = new NetworkTask(dest, strParam, networkCallback);
+        NetworkTask networkTask = new NetworkTask(dest, data, networkCallback);
         networkTask.execute();
     }
 

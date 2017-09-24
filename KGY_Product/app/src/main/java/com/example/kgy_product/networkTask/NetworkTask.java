@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.util.HashMap;
+
 /**
  * Created by ccc62 on 2017-07-02.
  */

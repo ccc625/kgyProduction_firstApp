@@ -6,5 +6,7 @@ package com.example.kgy_product.networkTask;
 
 public class ServerMethod
 {
-    public static final String init = "initUser";
+    public static final String initUser = "initUser";
+    public static final String registerUser = "registerUser";
+    public static final String openSampleList4 = "openSampleList4";
 }

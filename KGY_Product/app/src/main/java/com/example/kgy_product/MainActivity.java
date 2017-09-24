@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        AmfAdaptor.instance().initUser( callback, "tokenToKen");
+//        AmfAdaptor.instance().initUser( callback, "tokenToKen");
+        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
     }
 
     private void initDisplayObject()
