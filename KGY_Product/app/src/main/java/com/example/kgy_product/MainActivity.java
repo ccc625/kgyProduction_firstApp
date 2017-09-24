@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     private void init()
     {
         initDisplayObject();
-//        initListener();
+        initListener();
 
         AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
             @Override
