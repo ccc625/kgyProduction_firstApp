@@ -1,10 +1,8 @@
 package com.example.kgy_product.networkTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,15 +10,15 @@ import java.util.Map;
  * Created by ccc62 on 2017-08-26.
  */
 
-public class AmfAdaptor
+public class NetworkdAdaptor
 {
-    private static AmfAdaptor _manager;
+    private static NetworkdAdaptor _manager;
 
-    public static AmfAdaptor instance()
+    public static NetworkdAdaptor instance()
     {
         if( _manager == null )
         {
-            _manager = new AmfAdaptor( new Singleton() );
+            _manager = new NetworkdAdaptor( new Singleton() );
         }
 
         return _manager;
@@ -30,7 +28,7 @@ public class AmfAdaptor
 
     private Thread _taksThread;
 
-    public AmfAdaptor(Singleton singleton)
+    public NetworkdAdaptor(Singleton singleton)
     {
         init();
     }
@@ -98,10 +96,6 @@ public class AmfAdaptor
             e.printStackTrace();
         }
 
-
-//        HashMap<String, String> map = new HashMap<String, String>();
-//        map.put("token", token);
-
         requestMethod(ServerMethod.initUser, serverCallback, jsonObject.toString());
     }
 
@@ -126,12 +120,6 @@ public class AmfAdaptor
         {
             e.printStackTrace();
         }
-
-//        HashMap<String, String> map = new HashMap<String, String>();
-//
-//        map.put("name", name);
-//        map.put("age", age);
-//        map.put("emp_id", empId);
 
         requestMethod(ServerMethod.registerUser, serverCallback, jsonObject.toString());
     }

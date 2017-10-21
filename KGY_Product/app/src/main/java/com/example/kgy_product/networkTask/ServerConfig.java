@@ -38,7 +38,6 @@ public class ServerConfig
         ServiceList.put("UserService", ServerConfig.UserService);
         ServiceList.put("sample", ServerConfig.sample);
         ServiceList.put("kgy/make", ServerConfig.CommonService);
-//        ServiceList.put("kgy/make", ServerConfig.MakeService);
     }
 
 
