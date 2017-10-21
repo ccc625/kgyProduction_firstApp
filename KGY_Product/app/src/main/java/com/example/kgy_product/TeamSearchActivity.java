@@ -90,7 +90,6 @@ public class TeamSearchActivity extends AppCompatActivity
 
         listData.add( teamSearchListItem );
 
-//        listData.add( arrayList );
         //*/
 
         teamSearchListAdapter.setData( (ArrayList<TeamSearchListItem>) listData.clone() );

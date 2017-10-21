@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kgy_product.networkTask.AmfAdaptor;
+import com.example.kgy_product.networkTask.NetworkTask;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 public class MainActivity extends AppCompatActivity
 {
     private Button btnSelectPlace0;
@@ -26,6 +32,17 @@ public class MainActivity extends AppCompatActivity
     {
         initDisplayObject();
         initListener();
+
+        AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                System.out.println( data );
+            }
+        };
+
+//        AmfAdaptor.instance().initUser( callback, "tokenToKen");
+        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
     }
 
     private void initDisplayObject()

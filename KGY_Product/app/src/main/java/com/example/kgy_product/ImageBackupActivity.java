@@ -16,7 +16,8 @@ import java.net.URL;
  * Created by lee on 2017-06-17.
  */
 
-public class ImageBackupActivity extends Activity {
+public class ImageBackupActivity extends Activity
+{
 
     ImageView imView;
     String imgUrl = "";
