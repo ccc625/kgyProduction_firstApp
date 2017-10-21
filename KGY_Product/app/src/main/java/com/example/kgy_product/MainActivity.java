@@ -1,5 +1,6 @@
 package com.example.kgy_product;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         };
 
 //        AmfAdaptor.instance().initUser( callback, "tokenToKen");
-        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
+//        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
     }
 
     private void initDisplayObject()
@@ -61,15 +62,15 @@ public class MainActivity extends AppCompatActivity
                 ///TODO 각 버튼별로 동작 지정
                 if( view.getId() == btnSelectPlace0.getId() )
                 {
-
+                    startMakeTeamActivity("Seoul");
                 }
                 else if( view.getId() == btnSelectPlace1.getId() )
                 {
-
+                    startMakeTeamActivity("Gangbuk");
                 }
                 else if( view.getId() == btnSelectPlace2.getId() )
                 {
-
+                    startMakeTeamActivity("Gangnam");
                 }
             }
         };
@@ -77,5 +78,12 @@ public class MainActivity extends AppCompatActivity
         btnSelectPlace0.setOnClickListener( buttonClickListener );
         btnSelectPlace1.setOnClickListener( buttonClickListener );
         btnSelectPlace2.setOnClickListener( buttonClickListener );
+    }
+
+    private void startMakeTeamActivity(String location)
+    {
+        Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+        intent.putExtra("location",location);
+        startActivity(intent);
     }
 }

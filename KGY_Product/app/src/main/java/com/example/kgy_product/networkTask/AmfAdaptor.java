@@ -166,7 +166,7 @@ public class AmfAdaptor
         String dest = "";
         String serviceName = getServiceName( serverMethod );
 
-        dest = ServerConfig.LOCAL + "/" + serviceName + "/" + serverMethod + ".do";
+        dest = ServerConfig.DEST + "/" + serviceName + "/" + serverMethod + ".do";
 
         NetworkTask.NetworkCallback networkCallback = new NetworkTask.NetworkCallback() {
             @Override
