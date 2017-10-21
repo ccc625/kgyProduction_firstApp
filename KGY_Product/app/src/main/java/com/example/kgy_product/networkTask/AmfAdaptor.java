@@ -88,11 +88,21 @@ public class AmfAdaptor
             }
         };
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            jsonObject.put("token", token);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
 
-        map.put("token", token);
 
-//        requestMethod(ServerMethod.initUser, serverCallback, map);
+//        HashMap<String, String> map = new HashMap<String, String>();
+//        map.put("token", token);
+
+        requestMethod(ServerMethod.initUser, serverCallback, jsonObject.toString());
     }
 
     public void registerUser(final AmfCallback callback, String name, String age, String empId)
@@ -105,13 +115,25 @@ public class AmfAdaptor
             }
         };
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            jsonObject.put("name", name);
+            jsonObject.put("age", age);
+            jsonObject.put("emp_id", empId);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
 
-        map.put("name", name);
-        map.put("age", age);
-        map.put("emp_id", empId);
+//        HashMap<String, String> map = new HashMap<String, String>();
+//
+//        map.put("name", name);
+//        map.put("age", age);
+//        map.put("emp_id", empId);
 
-//        requestMethod(ServerMethod.registerUser, serverCallback, map);
+        requestMethod(ServerMethod.registerUser, serverCallback, jsonObject.toString());
     }
 
     public void openSampleList4(final AmfCallback callback, String name, String age, String empId)
@@ -135,16 +157,6 @@ public class AmfAdaptor
         {
             e.printStackTrace();
         }
-
-//        JSONObject jsonData = new JSONObject();
-//        try
-//        {
-//            jsonData.put("empVo", jsonObject);
-//        }
-//        catch (JSONException e)
-//        {
-//            e.printStackTrace();
-//        }
 
         requestMethod(ServerMethod.openSampleList4, serverCallback, jsonObject.toString());
     }
