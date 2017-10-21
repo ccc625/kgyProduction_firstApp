@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TeamMakeActivity">
+
         </activity>
         <activity android:name=".TeamSearchActivity">
         </activity>

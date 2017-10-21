@@ -26,6 +26,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
+//            @Override
+//            public void onResponse(JSONObject data)
+//            {
+//                System.out.println(data);
+//            }
+//        };
+//
+//        AmfAdaptor.instance().getCommonList(callback, "ALCOHOL");
+
         init();
     }
 

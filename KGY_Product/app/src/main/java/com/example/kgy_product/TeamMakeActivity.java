@@ -150,6 +150,7 @@ public class TeamMakeActivity extends AppCompatActivity
             public void onClickNextButton()
             {
                 System.out.println("btnNext");
+
                 if( currentMode < MODE_MAX )
                     currentMode += 1;
 

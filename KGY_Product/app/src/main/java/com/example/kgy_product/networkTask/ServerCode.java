@@ -6,5 +6,5 @@ package com.example.kgy_product.networkTask;
 
 public class ServerCode
 {
-    public static final String OK = "200";
+    public static final String OK = "true";
 }
