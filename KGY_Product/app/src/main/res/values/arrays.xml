@@ -7,4 +7,12 @@
         <item>4명</item>
         <item>5명 이상</item>
     </string-array>
+    
+    <string-array name="team_al_n">
+        <item>1병</item>
+        <item>2병</item>
+        <item>3병</item>
+        <item>4병</item>
+        <item>5병 이상</item>
+    </string-array>
 </resources>
