@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.kgy_product.networkTask.AmfAdaptor;
-import com.example.kgy_product.networkTask.NetworkTask;
+import com.example.kgy_product.networkTask.NetworkdAdaptor;
 
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +29,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        NetworkdAdaptor.AmfCallback callback = new NetworkdAdaptor.AmfCallback() {
+//            @Override
+//            public void onResponse(JSONObject data)
+//            {
+//                System.out.println(data);
+//            }
+//        };
+//
+//        NetworkdAdaptor.instance().getCommonList(callback, "ALCOHOL");
+
         init();
     }
 
@@ -39,13 +47,14 @@ public class MainActivity extends AppCompatActivity
         //TODO 테스트용 삭제 예정
         saveLogin();
 
+
         if(isLoginCheck()){
             //TODO 디비 접속 로그인
         } else {
             initDisplayObject();
             initListener();
 
-            AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
+            NetworkdAdaptor.AmfCallback callback = new NetworkdAdaptor.AmfCallback() {
                 @Override
                 public void onResponse(JSONObject data)
                 {
@@ -53,10 +62,9 @@ public class MainActivity extends AppCompatActivity
                 }
             };
 
-//        AmfAdaptor.instance().initUser( callback, "tokenToKen");
-//        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
+//        NetworkdAdaptor.instance().initUser( callback, "tokenToKen");
+//        NetworkdAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
         }
-
     }
 
     private void initDisplayObject()

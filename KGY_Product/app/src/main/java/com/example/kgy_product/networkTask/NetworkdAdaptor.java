@@ -1,10 +1,8 @@
 package com.example.kgy_product.networkTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,15 +10,15 @@ import java.util.Map;
  * Created by ccc62 on 2017-08-26.
  */
 
-public class AmfAdaptor
+public class NetworkdAdaptor
 {
-    private static AmfAdaptor _manager;
+    private static NetworkdAdaptor _manager;
 
-    public static AmfAdaptor instance()
+    public static NetworkdAdaptor instance()
     {
         if( _manager == null )
         {
-            _manager = new AmfAdaptor( new Singleton() );
+            _manager = new NetworkdAdaptor( new Singleton() );
         }
 
         return _manager;
@@ -30,7 +28,7 @@ public class AmfAdaptor
 
     private Thread _taksThread;
 
-    public AmfAdaptor(Singleton singleton)
+    public NetworkdAdaptor(Singleton singleton)
     {
         init();
     }
@@ -98,10 +96,6 @@ public class AmfAdaptor
             e.printStackTrace();
         }
 
-
-//        HashMap<String, String> map = new HashMap<String, String>();
-//        map.put("token", token);
-
         requestMethod(ServerMethod.initUser, serverCallback, jsonObject.toString());
     }
 
@@ -126,12 +120,6 @@ public class AmfAdaptor
         {
             e.printStackTrace();
         }
-
-//        HashMap<String, String> map = new HashMap<String, String>();
-//
-//        map.put("name", name);
-//        map.put("age", age);
-//        map.put("emp_id", empId);
 
         requestMethod(ServerMethod.registerUser, serverCallback, jsonObject.toString());
     }
@@ -161,12 +149,36 @@ public class AmfAdaptor
         requestMethod(ServerMethod.openSampleList4, serverCallback, jsonObject.toString());
     }
 
+    public void getCommonList(final AmfCallback callback, String upperKey)
+    {
+        ServerCallback serverCallback = new ServerCallback()
+        {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            jsonObject.put("upperKey", upperKey);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        requestMethod(ServerMethod.getCommonList, serverCallback, jsonObject.toString());
+    }
+
     private void requestMethod( String serverMethod, final ServerCallback callback, String data)
     {
         String dest = "";
         String serviceName = getServiceName( serverMethod );
 
-        dest = ServerConfig.DEST + "/" + serviceName + "/" + serverMethod + ".do";
+        dest = ServerConfig.LOCAL + "/" + serviceName + "/" + serverMethod + ".do";
 
         NetworkTask.NetworkCallback networkCallback = new NetworkTask.NetworkCallback() {
             @Override
@@ -174,7 +186,7 @@ public class AmfAdaptor
             {
                 try
                 {
-                    if( data != null && data.has("code") && data.get("code").toString().equals(ServerCode.OK) )
+                    if( data != null && data.has("success") && (Boolean)data.get("success") )
                         callback.onResponse( data );
                 }
                 catch( JSONException exeption )
