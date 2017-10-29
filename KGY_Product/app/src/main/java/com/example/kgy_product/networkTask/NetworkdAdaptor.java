@@ -76,7 +76,7 @@ public class NetworkdAdaptor
         return serviceName;
     }
 
-    public void initUser(final AmfCallback callback, String token )
+    public void initUser(final NetworkCallback callback, String token )
     {
         ServerCallback serverCallback  = new ServerCallback() {
             @Override
@@ -99,7 +99,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.initUser, serverCallback, jsonObject.toString());
     }
 
-    public void registerUser(final AmfCallback callback, String name, String age, String empId)
+    public void registerUser(final NetworkCallback callback, String name, String age, String empId)
     {
         ServerCallback serverCallback = new ServerCallback() {
             @Override
@@ -124,7 +124,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.registerUser, serverCallback, jsonObject.toString());
     }
 
-    public void openSampleList4(final AmfCallback callback, String name, String age, String empId)
+    public void openSampleList4(final NetworkCallback callback, String name, String age, String empId)
     {
         ServerCallback serverCallback = new ServerCallback() {
             @Override
@@ -149,7 +149,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.openSampleList4, serverCallback, jsonObject.toString());
     }
 
-    public void getCommonList(final AmfCallback callback, String upperKey)
+    public void getCommonList(final NetworkCallback callback, String upperKey)
     {
         ServerCallback serverCallback = new ServerCallback()
         {
@@ -200,7 +200,7 @@ public class NetworkdAdaptor
         networkTask.execute();
     }
 
-    public interface AmfCallback
+    public interface NetworkCallback
     {
         void onResponse(JSONObject data);
     }

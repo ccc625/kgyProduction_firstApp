@@ -164,7 +164,7 @@ public class MakeTeamLayout extends LinearLayout
         String teamName = txtTeamName.getText().toString();
 
         result.put("teamName", teamName);
-        
+
         String teamMemberNum = memberCountSpinner.getSelectedItem().toString();
 
         result.put("teamMemberNum", teamMemberNum);

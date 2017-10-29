@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        NetworkdAdaptor.AmfCallback callback = new NetworkdAdaptor.AmfCallback() {
+//        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
 //            @Override
 //            public void onResponse(JSONObject data)
 //            {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         initDisplayObject();
         initListener();
 
-        NetworkdAdaptor.AmfCallback callback = new NetworkdAdaptor.AmfCallback() {
+        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
             @Override
             public void onResponse(JSONObject data)
             {
