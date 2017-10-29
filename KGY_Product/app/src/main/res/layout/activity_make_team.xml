@@ -12,5 +12,24 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:src="@drawable/mainlogo"/>
+    
+    <LinearLayout
+        android:id="@+id/makeTeamContentLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+        <ScrollView
+            android:id="@+id/makeTeamContentScroll"
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/makeTeamBottomLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </LinearLayout>
 
 </LinearLayout>

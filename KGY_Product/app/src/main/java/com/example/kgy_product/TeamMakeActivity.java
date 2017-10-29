@@ -10,10 +10,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.example.kgy_product.teamMake.BottomLayout;
@@ -42,13 +45,10 @@ public class TeamMakeActivity extends AppCompatActivity
     private static final int MODE_INFO_TEAM = 102;
     private static final int MODE_IMAGE_SELECT = 103;
 
-    private static final int CONTENT_INDEX = 1;
-    private static final int BOTTOM_INDEX = 2;
+    private LinearLayout makeTeamContentLayout;
+    private ScrollView makeTeamContentScroll;
 
-    private LinearLayout lMakeTeam;
-
-    private EditText txtTeamName;
-    private Spinner memberCountSpinner;
+    private LinearLayout makeTeamBottomLayout;
 
     private BottomLayout bottomLayout;
     private MakeTeamLayout makeTeamLayout;
@@ -73,10 +73,49 @@ public class TeamMakeActivity extends AppCompatActivity
     @Override
     protected void onDestroy()
     {
-        txtTeamName = null;
-        memberCountSpinner = null;
+        removeListener();
 
-        bottomLayout = null;
+        if( bottomLayout != null)
+        {
+            bottomLayout.dispose();
+            bottomLayout = null;
+        }
+
+        if( makeTeamLayout != null )
+        {
+            makeTeamLayout.dispose();
+            makeTeamLayout = null;
+        }
+
+        if( teamInfoLayout != null )
+        {
+//            teamInfoLayout.dispose();
+            teamInfoLayout = null;
+        }
+
+        if( imageSelectLayout != null )
+        {
+//            imageSelectLayout.dispose();
+            imageSelectLayout = null;
+        }
+
+        if( makeTeamContentLayout != null )
+        {
+            makeTeamContentLayout.destroyDrawingCache();
+            makeTeamContentLayout = null;
+        }
+
+        if( makeTeamContentScroll != null )
+        {
+            makeTeamContentScroll.destroyDrawingCache();
+            makeTeamContentScroll = null;
+        }
+
+        if( makeTeamBottomLayout != null )
+        {
+            makeTeamBottomLayout.destroyDrawingCache();
+            makeTeamBottomLayout = null;
+        }
 
         super.onDestroy();
     }
@@ -91,7 +130,10 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private void initDisplayObject()
     {
-        lMakeTeam = ( LinearLayout ) findViewById( R.id.lMakeTeam );
+        makeTeamBottomLayout = ( LinearLayout ) findViewById( R.id.makeTeamBottomLayout );
+        makeTeamContentScroll = ( ScrollView ) findViewById( R.id.makeTeamContentScroll );
+
+        makeTeamBottomLayout = ( LinearLayout ) findViewById( R.id.makeTeamBottomLayout );
 
         initBottomLayout();
 
@@ -102,25 +144,26 @@ public class TeamMakeActivity extends AppCompatActivity
     {
         if( bottomLayout == null )
             bottomLayout = new BottomLayout(this);
-        lMakeTeam.addView( bottomLayout );
+
+        makeTeamBottomLayout.addView( bottomLayout );
     }
 
     private void setMode( int mode )
     {
-        if( lMakeTeam.getChildCount() >= 3 )
-            lMakeTeam.removeViewAt( CONTENT_INDEX );
+        if( makeTeamContentScroll.getChildCount() > 0)
+            makeTeamContentScroll.removeViewAt(0);
 
         switch( mode )
         {
             case MODE_MAKE_TEAM :
                 if( makeTeamLayout == null )
                     makeTeamLayout = new MakeTeamLayout(this);
-                lMakeTeam.addView( makeTeamLayout, CONTENT_INDEX );
+                makeTeamContentScroll.addView( makeTeamLayout );
                 break;
             case MODE_INFO_TEAM :
                 if( teamInfoLayout == null )
                     teamInfoLayout = new TeamInfoLayout(this);
-                lMakeTeam.addView( teamInfoLayout, CONTENT_INDEX );
+                makeTeamContentScroll.addView( teamInfoLayout );
                 break;
             case MODE_IMAGE_SELECT :
                 if( imageSelectLayout == null )
@@ -128,7 +171,7 @@ public class TeamMakeActivity extends AppCompatActivity
                     imageSelectLayout = new ImageSelectLayout(this);
                     imageSelectLayout.setPhotoActionListener( photoActionListener );
                 }
-                lMakeTeam.addView( imageSelectLayout, CONTENT_INDEX );
+                makeTeamContentScroll.addView( imageSelectLayout );
                 break;
         }
     }
@@ -174,6 +217,19 @@ public class TeamMakeActivity extends AppCompatActivity
         };
 
         bottomLayout.setButtonCallback( bottomButtonListener );
+    }
+
+    private void removeListener()
+    {
+        if( bottomLayout != null )
+        {
+            bottomLayout.setButtonCallback(null);
+        }
+
+        if( imageSelectLayout != null )
+        {
+            imageSelectLayout.setPhotoActionListener(null);
+        }
     }
 
     private void takePhotoAction()
