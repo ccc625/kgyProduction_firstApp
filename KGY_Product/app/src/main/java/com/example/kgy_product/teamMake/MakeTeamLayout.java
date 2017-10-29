@@ -1,6 +1,8 @@
 package com.example.kgy_product.teamMake;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,6 +35,7 @@ public class MakeTeamLayout extends LinearLayout
     private Spinner memberCountSpinner;
 
     private RadioGroup.OnCheckedChangeListener checkedChangeListener;
+    private BaseAdapter spinnerAdapter;
 
     public MakeTeamLayout( Context context )
     {
@@ -113,6 +116,8 @@ public class MakeTeamLayout extends LinearLayout
         btnMan = (RadioButton) rootLayout.findViewById(R.id.btnMan);
         btnWoman = (RadioButton) rootLayout.findViewById(R.id.btnWoman);
 
+        txtTeamName = (EditText) rootLayout.findViewById(R.id.txtTeamName);
+
         memberCountSpinner = (Spinner) rootLayout.findViewById(R.id.memberCountSpinner);
     }
 
@@ -159,6 +164,11 @@ public class MakeTeamLayout extends LinearLayout
         String teamName = txtTeamName.getText().toString();
 
         result.put("teamName", teamName);
+
+        ///TODO @jimin 멤버 카운터 스피너 값 가져오기
+//        String teamMemberNum = memberCountSpinner
+
+//        result.put("teamMemberNum", teamMemberNum);
 
         return result;
     }
