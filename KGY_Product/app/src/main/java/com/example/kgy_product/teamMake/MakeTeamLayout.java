@@ -164,11 +164,10 @@ public class MakeTeamLayout extends LinearLayout
         String teamName = txtTeamName.getText().toString();
 
         result.put("teamName", teamName);
+        
+        String teamMemberNum = memberCountSpinner.getSelectedItem().toString();
 
-        ///TODO @jimin 멤버 카운터 스피너 값 가져오기
-//        String teamMemberNum = memberCountSpinner
-
-//        result.put("teamMemberNum", teamMemberNum);
+        result.put("teamMemberNum", teamMemberNum);
 
         return result;
     }
