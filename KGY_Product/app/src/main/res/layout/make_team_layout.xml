@@ -49,7 +49,7 @@
     <EditText
         android:id="@+id/txtTeamName"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_marginTop="5dp" />
 
     <TextView
@@ -64,11 +64,6 @@
         android:id="@+id/memberCountSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"></Spinner>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/get" />
+        android:layout_marginTop="5dp"
+        android:entries="@array/team_mn" />
 </LinearLayout>

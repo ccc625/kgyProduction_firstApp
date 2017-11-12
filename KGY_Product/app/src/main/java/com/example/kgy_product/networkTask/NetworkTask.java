@@ -41,6 +41,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
+        if( s == null )
+        {
+            this.callback.onResponse( null );
+            return;
+        }
+
         JSONObject data = null;
         try
         {
