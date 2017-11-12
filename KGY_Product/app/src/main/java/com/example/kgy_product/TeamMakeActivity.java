@@ -20,10 +20,15 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.scheduler.ScheduleNode;
+import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.teamMake.BottomLayout;
 import com.example.kgy_product.teamMake.ImageSelectLayout;
 import com.example.kgy_product.teamMake.MakeTeamLayout;
 import com.example.kgy_product.teamMake.TeamInfoLayout;
+
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -62,7 +67,6 @@ public class TeamMakeActivity extends AppCompatActivity
     private ImageSelectLayout.PhotoActionListener photoActionListener;
 
     private Uri mImageCaptureUri;
-
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -136,6 +140,36 @@ public class TeamMakeActivity extends AppCompatActivity
 
         initDisplayObject();
         initListener();
+        startScheduler();
+    }
+
+    private void startScheduler()
+    {
+        Scheduler scheduler = new Scheduler();
+
+        ScheduleNode.ScheduleAction alcoholAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(final Callback callback)
+            {
+                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                    @Override
+                    public void onResponse(JSONObject data)
+                    {
+                        System.out.println(data);
+                        callback.excute();
+                    }
+                };
+
+                NetworkdAdaptor.instance().getCommonList(networkCallback, "ALCOHOL");
+            }
+        };
+
+        ScheduleNode node;
+        node = new ScheduleNode("alcoholAction", alcoholAction);
+
+        scheduler.add( node );
+
+        scheduler.start();
     }
 
     private void initDisplayObject()

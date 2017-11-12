@@ -41,15 +41,5 @@ public class TeamInfoLayout extends LinearLayout
         drunkQuantitySpinner = (Spinner) rootLayout.findViewById( R.id.drunkQuantitySpinner );
         txtComment = (EditText) rootLayout.findViewById( R.id.txtComment );
         txtWish = (EditText) rootLayout.findViewById( R.id.txtWish );
-
-        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
-            @Override
-            public void onResponse(JSONObject data)
-            {
-                System.out.println(data);
-            }
-        };
-
-        NetworkdAdaptor.instance().getCommonList(callback, "ALCOHOL");
     }
 }
