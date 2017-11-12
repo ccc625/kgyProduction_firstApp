@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.kgy_product.teamMake.BottomLayout;
 import com.example.kgy_product.teamMake.ImageSelectLayout;
@@ -62,13 +63,24 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private Uri mImageCaptureUri;
 
-    protected void onCreate(Bundle savedInstanceState)
+
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_team);
 
+
+        Intent intent = getIntent();
+        String location = intent.getStringExtra("seoul");
+        String location1 = intent.getStringExtra("Gangnam");
+        String location2 = intent.getStringExtra("Gangbook");
+
+        Toast t = Toast.makeText(this,location,Toast.LENGTH_LONG);
+        t.show();
+
         init();
     }
+
 
     @Override
     protected void onDestroy()

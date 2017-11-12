@@ -2,11 +2,7 @@ package com.example.kgy_product.teamMake;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.kgy_product.R;
-
-import java.io.File;
 
 /**
  * Created by ccc62 on 2017-05-13.
@@ -108,9 +102,15 @@ public class ImageSelectLayout extends LinearLayout
         btnUploadPicture.setOnClickListener( onClickListener );
     }
 
+
+
     public interface PhotoActionListener
     {
         void doTakePhotoAction();
         void doTakeAlbumAction();
     }
+
+
+
+
 }

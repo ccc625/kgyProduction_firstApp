@@ -1,21 +1,19 @@
 package com.example.kgy_product;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
-import com.example.kgy_product.networkTask.AmfAdaptor;
-import com.example.kgy_product.networkTask.NetworkTask;
-
-import org.json.JSONObject;
-import org.json.JSONStringer;
 
 public class MainActivity extends AppCompatActivity
 {
     private Button btnSelectPlace0;
     private Button btnSelectPlace1;
     private Button btnSelectPlace2;
+
+
+
 
     private View.OnClickListener buttonClickListener;
 
@@ -32,17 +30,6 @@ public class MainActivity extends AppCompatActivity
     {
         initDisplayObject();
         initListener();
-
-        AmfAdaptor.AmfCallback callback = new AmfAdaptor.AmfCallback() {
-            @Override
-            public void onResponse(JSONObject data)
-            {
-                System.out.println( data );
-            }
-        };
-
-//        AmfAdaptor.instance().initUser( callback, "tokenToKen");
-        AmfAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
     }
 
     private void initDisplayObject()
@@ -62,13 +49,26 @@ public class MainActivity extends AppCompatActivity
                 if( view.getId() == btnSelectPlace0.getId() )
                 {
 
+
+                    Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+                    intent.putExtra("Seoul","서울");
+                    startActivity(intent);
+
+
+
                 }
                 else if( view.getId() == btnSelectPlace1.getId() )
                 {
+                    Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+                    intent.putExtra("Gangnam","강남");
+                    startActivity(intent);
 
                 }
                 else if( view.getId() == btnSelectPlace2.getId() )
                 {
+                    Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+                    intent.putExtra("Gangbook","강북");
+                    startActivity(intent);
 
                 }
             }
