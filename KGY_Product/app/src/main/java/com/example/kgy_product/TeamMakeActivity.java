@@ -71,9 +71,7 @@ public class TeamMakeActivity extends AppCompatActivity
 
 
         Intent intent = getIntent();
-        String location = intent.getStringExtra("seoul");
-        String location1 = intent.getStringExtra("Gangnam");
-        String location2 = intent.getStringExtra("Gangbook");
+        String location = intent.getStringExtra("location");
 
         Toast t = Toast.makeText(this,location,Toast.LENGTH_LONG);
         t.show();

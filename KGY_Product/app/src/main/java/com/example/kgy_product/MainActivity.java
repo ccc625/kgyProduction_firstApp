@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity
 
     private void init()
     {
+        initDisplayObject();
+        initListener();
+
         //TODO 테스트용 삭제 예정
         saveLogin();
 

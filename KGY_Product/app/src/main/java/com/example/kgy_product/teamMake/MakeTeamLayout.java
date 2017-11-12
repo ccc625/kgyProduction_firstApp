@@ -42,12 +42,8 @@ public class MakeTeamLayout extends LinearLayout
         super( context );
 
         mContext = context;
-
-
-
+        init();
     }
-
-
 
     @Override
     protected void onAttachedToWindow()
