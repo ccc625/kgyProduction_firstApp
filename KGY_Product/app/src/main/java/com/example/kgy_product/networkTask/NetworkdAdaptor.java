@@ -197,10 +197,8 @@ public class NetworkdAdaptor
             jsonObject.put("team_reg_time", map.get("team_reg_time"));
             jsonObject.put("team_phone", map.get("team_phone"));
             jsonObject.put("img_file", map.get("img_file"));
-
-
-
-        }catch(JSONException e)
+        }
+        catch(JSONException e)
         {
 
             e.printStackTrace();

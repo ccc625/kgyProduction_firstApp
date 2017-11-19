@@ -354,6 +354,16 @@ public class TeamMakeActivity extends AppCompatActivity
 
         teamRegisterData.put("img_file", strImage);
         teamRegisterData.put("area", location);
+
+        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                System.out.println(data.toString());
+            }
+        };
+
+        NetworkdAdaptor.instance().setMakeRegister(callback, teamRegisterData);
     }
 
     private void removeListener()

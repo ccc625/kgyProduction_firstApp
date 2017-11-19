@@ -15,19 +15,19 @@ public class ServerConfig
 
     public static String[] UserService =
     {
-            "initUser",
-            "registerUser"
+            ServerMethod.initUser,
+            ServerMethod.registerUser
     };
 
     public static String[] sample =
     {
-            "openSampleList4"
+            ServerMethod.openSampleList4
     };
 
     public static String[] CommonService =
     {
-            "getCommonList",
-            "setMakeRegister"
+            ServerMethod.getCommonList,
+            ServerMethod.setMakeRegister
     };
 
     public static void init()
