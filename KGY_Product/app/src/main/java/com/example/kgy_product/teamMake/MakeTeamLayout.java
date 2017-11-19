@@ -159,11 +159,11 @@ public class MakeTeamLayout extends LinearLayout
             gender = EGenderType.WOMAN;
         }
 
-        result.put("gender", gender.toString());
+        result.put("team_gender", gender.toString());
 
         String teamName = txtTeamName.getText().toString();
 
-        result.put("teamName", teamName);
+        result.put("team_nm", teamName);
 
         String teamMemberNum = memberCountSpinner.getSelectedItem().toString();
 

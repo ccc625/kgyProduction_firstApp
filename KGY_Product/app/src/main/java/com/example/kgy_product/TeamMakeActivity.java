@@ -66,6 +66,7 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private JSONArray arrAlcohol;
 
+    private String location;
     private HashMap<String, String> makeTeamLayoutData;
     private HashMap<String, String> teamInfoLayoutData;
     private String strImage;
@@ -82,7 +83,7 @@ public class TeamMakeActivity extends AppCompatActivity
 
 
         Intent intent = getIntent();
-        String location = intent.getStringExtra("location");
+        location = intent.getStringExtra("location");
 
         Toast t = Toast.makeText(this,location,Toast.LENGTH_LONG);
         t.show();
@@ -287,10 +288,16 @@ public class TeamMakeActivity extends AppCompatActivity
 
                 doActionLayoutExit();
 
-                if( currentMode < MODE_MAX )
+                if( currentMode < MODE_MAX ) {
                     currentMode += 1;
+                }
                 else
+                {
+                    registerTeam();
+                    ///TODO 다음 액티비티로 넘겨주기
                     return;
+                }
+
 
                 setMode( currentMode );
             }
@@ -345,7 +352,8 @@ public class TeamMakeActivity extends AppCompatActivity
             teamRegisterData.put(entry.getKey(), entry.getValue());
         }
 
-        teamRegisterData.put("img", strImage);
+        teamRegisterData.put("img_file", strImage);
+        teamRegisterData.put("area", location);
     }
 
     private void removeListener()
@@ -446,8 +454,6 @@ public class TeamMakeActivity extends AppCompatActivity
                     f.delete();
                 }
             }
-
-
         }
     }
 

@@ -141,10 +141,10 @@ public class TeamInfoLayout extends LinearLayout
     {
         HashMap<String, String> result = new HashMap<>();
 
-        result.put("alcoholType", drunkTypeSpinner.getSelectedItem().toString());
-        result.put("alcoholNum", drunkQuantitySpinner.getSelectedItem().toString());
-        result.put("comment", txtComment.getText().toString());
-        result.put("wish", txtWish.getText().toString());
+        result.put("alcohol", drunkTypeSpinner.getSelectedItem().toString());
+        result.put("al_num", drunkQuantitySpinner.getSelectedItem().toString());
+        result.put("team_comment", txtComment.getText().toString());
+        result.put("team_you_comment", txtWish.getText().toString());
 
         return result;
     }
