@@ -14,9 +14,12 @@ import java.util.Queue;
 public class Scheduler
 {
     private Queue<ScheduleNode> _queue;
+    private OnCompleteSchedulerListener _onCompleteSchedulerListener;
 
-    public Scheduler()
+    public Scheduler(OnCompleteSchedulerListener onCompleteSchedulerListener)
     {
+        _onCompleteSchedulerListener = onCompleteSchedulerListener;
+
         _queue = new Queue<ScheduleNode>()
         {
             private ArrayList<ScheduleNode> _list = new ArrayList<>();
@@ -163,6 +166,10 @@ public class Scheduler
     {
         if( _queue.isEmpty() )
         {
+            if( _onCompleteSchedulerListener != null)
+            {
+                _onCompleteSchedulerListener.onComplete();
+            }
             return;
         }
 
@@ -177,5 +184,10 @@ public class Scheduler
         };
 
         currentNode.start();
+    }
+
+    public interface OnCompleteSchedulerListener
+    {
+        void onComplete();
     }
 }

@@ -10,14 +10,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
@@ -28,11 +24,15 @@ import com.example.kgy_product.teamMake.ImageSelectLayout;
 import com.example.kgy_product.teamMake.MakeTeamLayout;
 import com.example.kgy_product.teamMake.TeamInfoLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by ccc62 on 2017-03-25.
@@ -62,6 +62,8 @@ public class TeamMakeActivity extends AppCompatActivity
     private ImageSelectLayout imageSelectLayout;
 
     private int currentMode;
+
+    private JSONArray arrAlcohol;
 
     private BottomLayout.ButtonCallback bottomButtonListener;
     private ImageSelectLayout.PhotoActionListener photoActionListener;
@@ -138,14 +140,16 @@ public class TeamMakeActivity extends AppCompatActivity
     {
         currentMode = 101;
 
-        initDisplayObject();
-        initListener();
-        startScheduler();
-    }
+        Scheduler.OnCompleteSchedulerListener onCompleteSchedulerListener = new Scheduler.OnCompleteSchedulerListener()
+        {
+            public void onComplete()
+            {
+                System.out.println("onCompleteScheduler");
+            }
+        };
 
-    private void startScheduler()
-    {
-        Scheduler scheduler = new Scheduler();
+        Scheduler scheduler = new Scheduler(onCompleteSchedulerListener);
+        ScheduleNode node;
 
         ScheduleNode.ScheduleAction alcoholAction = new ScheduleNode.ScheduleAction() {
             @Override
@@ -156,6 +160,16 @@ public class TeamMakeActivity extends AppCompatActivity
                     public void onResponse(JSONObject data)
                     {
                         System.out.println(data);
+
+                        try
+                        {
+                            arrAlcohol = (JSONArray) data.get("result");
+                        }
+                        catch( JSONException exception )
+                        {
+                            exception.printStackTrace();
+                        }
+
                         callback.excute();
                     }
                 };
@@ -164,10 +178,32 @@ public class TeamMakeActivity extends AppCompatActivity
             }
         };
 
-        ScheduleNode node;
         node = new ScheduleNode("alcoholAction", alcoholAction);
-
         scheduler.add( node );
+
+        ScheduleNode.ScheduleAction initDisplayAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback)
+            {
+                initDisplayObject();
+                callback.excute();
+            }
+        };
+
+        node = new ScheduleNode("initDisplayAction", initDisplayAction);
+        scheduler.add(node);
+
+        ScheduleNode.ScheduleAction initListenerAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback)
+            {
+                initListener();
+                callback.excute();
+            }
+        };
+
+        node = new ScheduleNode("initListenerAction", initListenerAction);
+        scheduler.add(node);
 
         scheduler.start();
     }
@@ -205,8 +241,10 @@ public class TeamMakeActivity extends AppCompatActivity
                 makeTeamContentScroll.addView( makeTeamLayout );
                 break;
             case MODE_INFO_TEAM :
-                if( teamInfoLayout == null )
+                if( teamInfoLayout == null ) {
                     teamInfoLayout = new TeamInfoLayout(this);
+                    teamInfoLayout.setData(arrAlcohol);
+                }
                 makeTeamContentScroll.addView( teamInfoLayout );
                 break;
             case MODE_IMAGE_SELECT :
