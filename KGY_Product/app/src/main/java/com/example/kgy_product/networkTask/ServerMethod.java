@@ -10,4 +10,5 @@ public class ServerMethod
     public static final String registerUser = "registerUser";
     public static final String openSampleList4 = "openSampleList4";
     public static final String getCommonList = "getCommonList";
+    public static final String setMakeRegister = "setMakeRegister";
 }

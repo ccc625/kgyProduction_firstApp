@@ -1,7 +1,5 @@
 package com.example.kgy_product.networkTask;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 /**
@@ -28,7 +26,8 @@ public class ServerConfig
 
     public static String[] CommonService =
     {
-            "getCommonList"
+            "getCommonList",
+            "setMakeRegister"
     };
 
     public static void init()
