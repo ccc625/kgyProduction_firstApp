@@ -42,6 +42,54 @@ public class TeamInfoLayout extends LinearLayout
         init();
     }
 
+    public void dispose()
+    {
+        if( drunkTypeSpinner != null )
+        {
+            drunkTypeSpinner.destroyDrawingCache();
+            drunkTypeSpinner.setAdapter(null);
+            drunkTypeSpinner = null;
+        }
+
+        if( drunkQuantitySpinner != null )
+        {
+            drunkQuantitySpinner.destroyDrawingCache();
+            drunkQuantitySpinner = null;
+        }
+
+        if( txtComment != null )
+        {
+            txtComment.destroyDrawingCache();
+            txtComment = null;
+        }
+
+        if( txtWish != null )
+        {
+            txtWish.destroyDrawingCache();
+            txtWish = null;
+        }
+
+        if( rootLayout != null )
+        {
+            rootLayout.destroyDrawingCache();
+            rootLayout = null;
+        }
+
+        if( spinnerAdapter != null )
+        {
+            spinnerAdapter.clear();
+            spinnerAdapter = null;
+        }
+
+        if( alcohol != null )
+        {
+            alcohol.clear();
+            alcohol = null;
+        }
+
+        mContext = null;
+    }
+
     private void init()
     {
         rootLayout = (LinearLayout) inflate( mContext, R.layout.team_info_layout, null );
@@ -87,5 +135,17 @@ public class TeamInfoLayout extends LinearLayout
         }
 
         setDrunkSpinner();
+    }
+
+    public HashMap<String, String> getData()
+    {
+        HashMap<String, String> result = new HashMap<>();
+
+        result.put("alcoholType", drunkTypeSpinner.getSelectedItem().toString());
+        result.put("alcoholNum", drunkQuantitySpinner.getSelectedItem().toString());
+        result.put("comment", txtComment.getText().toString());
+        result.put("wish", txtWish.getText().toString());
+
+        return result;
     }
 }

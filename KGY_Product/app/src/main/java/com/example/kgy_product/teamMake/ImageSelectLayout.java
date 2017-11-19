@@ -36,6 +36,40 @@ public class ImageSelectLayout extends LinearLayout
         init();
     }
 
+    public void dispose()
+    {
+        if( btnUploadPicture != null )
+        {
+            btnUploadPicture.setOnClickListener(null);
+            btnUploadPicture.destroyDrawingCache();
+            btnUploadPicture = null;
+        }
+
+        if( iv_UserPhoto != null )
+        {
+            iv_UserPhoto.destroyDrawingCache();
+            iv_UserPhoto = null;
+        }
+
+        if( rootLayout != null )
+        {
+            rootLayout.destroyDrawingCache();
+            rootLayout = null;
+        }
+
+        if( onClickListener != null )
+        {
+            onClickListener = null;
+        }
+
+        if( photoActionListener != null )
+        {
+            photoActionListener = null;
+        }
+
+        mContext = null;
+    }
+
     public void setPhotoActionListener( PhotoActionListener listener )
     {
         photoActionListener = listener;
@@ -102,15 +136,9 @@ public class ImageSelectLayout extends LinearLayout
         btnUploadPicture.setOnClickListener( onClickListener );
     }
 
-
-
     public interface PhotoActionListener
     {
         void doTakePhotoAction();
         void doTakeAlbumAction();
     }
-
-
-
-
 }
