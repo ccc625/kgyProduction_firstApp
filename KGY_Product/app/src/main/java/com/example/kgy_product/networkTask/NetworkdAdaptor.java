@@ -173,6 +173,41 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.getCommonList, serverCallback, jsonObject.toString());
     }
 
+    public void setMakeRegister(final NetworkCallback callback , HashMap map)
+    {
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            jsonObject.put("team_nm", map.get("team_nm"));
+            jsonObject.put("team_gender", map.get("team_gender"));
+            jsonObject.put("area", map.get("area"));
+            jsonObject.put("alcohol", map.get("alcohol"));
+            jsonObject.put("al_num", map.get("al_num"));
+            jsonObject.put("team_comment", map.get("team_comment"));
+            jsonObject.put("team_you_comment", map.get("team_you_comment"));
+            jsonObject.put("team_img_cd", map.get("team_img_cd"));
+            jsonObject.put("team_reg_time", map.get("team_reg_time"));
+            jsonObject.put("team_phone", map.get("team_phone"));
+            jsonObject.put("img_file", map.get("img_file"));
+
+
+
+        }catch(JSONException e)
+        {
+
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.setMakeRegister,serverCallback , jsonObject.toString());
+    }
+
     private void requestMethod( String serverMethod, final ServerCallback callback, String data)
     {
         String dest = "";
