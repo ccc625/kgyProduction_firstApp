@@ -29,10 +29,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -66,6 +66,10 @@ public class TeamMakeActivity extends AppCompatActivity
 
     private JSONArray arrAlcohol;
 
+    private HashMap<String, String> makeTeamLayoutData;
+    private HashMap<String, String> teamInfoLayoutData;
+    private String strImage;
+
     private BottomLayout.ButtonCallback bottomButtonListener;
     private ImageSelectLayout.PhotoActionListener photoActionListener;
 
@@ -86,7 +90,6 @@ public class TeamMakeActivity extends AppCompatActivity
         init();
     }
 
-
     @Override
     protected void onDestroy()
     {
@@ -106,13 +109,13 @@ public class TeamMakeActivity extends AppCompatActivity
 
         if( teamInfoLayout != null )
         {
-//            teamInfoLayout.dispose();
+            teamInfoLayout.dispose();
             teamInfoLayout = null;
         }
 
         if( imageSelectLayout != null )
         {
-//            imageSelectLayout.dispose();
+            imageSelectLayout.dispose();
             imageSelectLayout = null;
         }
 
@@ -266,8 +269,13 @@ public class TeamMakeActivity extends AppCompatActivity
             public void onClickPrevButton()
             {
                 System.out.println("btnPrev");
+
+                doActionLayoutExit();
+
                 if( currentMode > MODE_MIN )
                     currentMode -= 1;
+                else
+                    return;
 
                 setMode( currentMode );
             }
@@ -277,8 +285,12 @@ public class TeamMakeActivity extends AppCompatActivity
             {
                 System.out.println("btnNext");
 
+                doActionLayoutExit();
+
                 if( currentMode < MODE_MAX )
                     currentMode += 1;
+                else
+                    return;
 
                 setMode( currentMode );
             }
@@ -300,6 +312,40 @@ public class TeamMakeActivity extends AppCompatActivity
         };
 
         bottomLayout.setButtonCallback( bottomButtonListener );
+    }
+
+    private void doActionLayoutExit()
+    {
+        switch( currentMode )
+        {
+            case MODE_MAKE_TEAM :
+                makeTeamLayoutData = makeTeamLayout.getData();
+                break;
+
+            case MODE_INFO_TEAM :
+                teamInfoLayoutData = teamInfoLayout.getData();
+                break;
+
+            case MODE_IMAGE_SELECT :
+                break;
+        }
+    }
+
+    private void registerTeam()
+    {
+        HashMap<String, String> teamRegisterData = new HashMap<>();
+
+        for( Map.Entry<String, String> entry : makeTeamLayoutData.entrySet() )
+        {
+            teamRegisterData.put(entry.getKey(), entry.getValue());
+        }
+
+        for( Map.Entry<String, String> entry : teamInfoLayoutData.entrySet() )
+        {
+            teamRegisterData.put(entry.getKey(), entry.getValue());
+        }
+
+        teamRegisterData.put("img", strImage);
     }
 
     private void removeListener()
@@ -384,7 +430,7 @@ public class TeamMakeActivity extends AppCompatActivity
                 if (extras != null)
                 {
                     Bitmap photo = extras.getParcelable("data");
-                    String image = getBase64String(photo);
+                    strImage = getBase64String(photo);
 
                     if( imageSelectLayout != null )
                     {
