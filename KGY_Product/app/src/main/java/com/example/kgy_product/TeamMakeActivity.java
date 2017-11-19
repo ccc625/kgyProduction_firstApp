@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -26,8 +27,11 @@ import com.example.kgy_product.teamMake.MakeTeamLayout;
 import com.example.kgy_product.teamMake.TeamInfoLayout;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by ccc62 on 2017-03-25.
@@ -277,7 +281,7 @@ public class TeamMakeActivity extends AppCompatActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        System.out.println(requestCode);
         if (resultCode != RESULT_OK)
             return;
 
@@ -305,15 +309,13 @@ public class TeamMakeActivity extends AppCompatActivity
             }
             case CROP_FROM_IMAGE:
             {
-                Bundle extras = data.getExtras();
 
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        "/SmartWheel/" + System.currentTimeMillis() + ".jpg";
+                Bundle extras = data.getExtras();
 
                 if (extras != null)
                 {
                     Bitmap photo = extras.getParcelable("data");
-                    storeCropImage( photo, filePath );
+                    String image = getBase64String(photo);
 
                     if( imageSelectLayout != null )
                     {
@@ -329,33 +331,22 @@ public class TeamMakeActivity extends AppCompatActivity
                     f.delete();
                 }
             }
+
+
         }
     }
 
-    private void storeCropImage(Bitmap bitmap , String filePath)
+    private String getBase64String(Bitmap bitmap)
     {
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SmartWheel";
-        File directory_SmartWheel = new File(dirPath);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        if (!directory_SmartWheel.exists())
-            directory_SmartWheel.mkdir();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 
-        File copyFile = new File(filePath);
-        BufferedOutputStream out = null;
+        byte[] imageBytes = baos.toByteArray();
 
-        try
-        {
-            copyFile.createNewFile();
-            out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                    Uri.fromFile(copyFile)));
+        String base64String = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
 
-            out.flush();  //아웃스트림등의 모든버퍼가 채워지면 flush나 close의 모든내용을 하드디스크파일에 출력한다.
-            out.close();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        return base64String;
     }
+
 }
