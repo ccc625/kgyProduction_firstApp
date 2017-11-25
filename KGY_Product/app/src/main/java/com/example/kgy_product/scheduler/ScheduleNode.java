@@ -11,6 +11,11 @@ public class ScheduleNode
 
     public ScheduleCallback callback;
 
+    public String getKey()
+    {
+        return _key;
+    }
+
     public ScheduleNode(String key, ScheduleAction action)
     {
         this._key = key;
