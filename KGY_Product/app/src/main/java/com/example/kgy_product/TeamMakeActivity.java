@@ -1,6 +1,7 @@
 package com.example.kgy_product;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -360,6 +362,30 @@ public class TeamMakeActivity extends AppCompatActivity
 
         teamRegisterData.put("img_file", strImage);
         teamRegisterData.put("area", location);
+
+        TelephonyManager telephony = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String phoneNumber = "";
+
+        try
+        {
+            if (telephony.getLine1Number() != null)
+            {
+                phoneNumber = telephony.getLine1Number();
+            }
+            else
+            {
+                if (telephony.getSimSerialNumber() != null)
+                {
+                    phoneNumber = telephony.getSimSerialNumber();
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        teamRegisterData.put("team_phone", phoneNumber);
 
         NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
             @Override

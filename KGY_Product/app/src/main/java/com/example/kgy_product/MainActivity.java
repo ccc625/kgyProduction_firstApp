@@ -106,9 +106,6 @@ public class MainActivity extends AppCompatActivity
                     System.out.println( data );
                 }
             };
-
-//        NetworkdAdaptor.instance().initUser( callback, "tokenToKen");
-//        NetworkdAdaptor.instance().openSampleList4( callback, "yjm", "20", "1");
         }
     }
 
