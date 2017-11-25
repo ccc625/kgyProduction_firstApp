@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +118,8 @@ public class TeamInfoLayout extends LinearLayout
     public void setData(JSONArray arrAlcohol)
     {
         alcohol = new HashMap<>();
+
+        ///TODO @jimin arrAlcohol정렬 필요
 
         try
         {

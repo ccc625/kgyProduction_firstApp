@@ -93,9 +93,12 @@ public class MainActivity extends AppCompatActivity
         //TODO 테스트용 삭제 예정
         saveLogin();
 
-        if(isLoginCheck()){
+        if(isLoginCheck())
+        {
             //TODO 디비 접속 로그인
-        } else {
+        }
+        else
+        {
             initDisplayObject();
             initListener();
 
