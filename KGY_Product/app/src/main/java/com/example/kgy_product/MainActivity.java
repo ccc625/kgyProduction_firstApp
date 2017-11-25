@@ -1,13 +1,19 @@
 package com.example.kgy_product;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.scheduler.ScheduleNode;
+import com.example.kgy_product.scheduler.Scheduler;
 
 import org.json.JSONObject;
 
@@ -16,9 +22,12 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final int PERMISSIONS_REQUEST_CODE = 1001;
+
     private Button btnSelectPlace0;
     private Button btnSelectPlace1;
     private Button btnSelectPlace2;
+    private Scheduler scheduler;
 
     private View.OnClickListener buttonClickListener;
 
@@ -28,23 +37,58 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
-//            @Override
-//            public void onResponse(JSONObject data)
-//            {
-//                System.out.println(data);
-//            }
-//        };
-//
-//        NetworkdAdaptor.instance().getCommonList(callback, "ALCOHOL");
-
         init();
     }
 
     private void init()
     {
-        initDisplayObject();
-        initListener();
+        Scheduler.OnCompleteSchedulerListener onCompleteSchedulerListener = new Scheduler.OnCompleteSchedulerListener()
+        {
+            public void onComplete()
+            {
+                System.out.println("[MainActivity] onCompleteScheduler");
+            }
+        };
+
+        scheduler = new Scheduler(onCompleteSchedulerListener);
+        ScheduleNode node;
+
+        ScheduleNode.ScheduleAction checkPermissionsAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback)
+            {
+                ///NOTE @jimin 퍼미션체크의 경우 흐름을 따라갈 수 없어서 별도로 Scheduler에 key값으로 complete를 쏴줘야함
+                checkPermissions();
+            }
+        };
+
+        node = new ScheduleNode("checkPermissionsAction", checkPermissionsAction);
+        scheduler.add(node);
+
+        ScheduleNode.ScheduleAction initDisplayAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback)
+            {
+                initDisplayObject();
+                callback.excute();
+            }
+        };
+        node = new ScheduleNode("initDisplayAction", initDisplayAction);
+        scheduler.add(node);
+
+        ScheduleNode.ScheduleAction initListenerAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback)
+            {
+                initListener();
+                callback.excute();
+            }
+        };
+
+        node = new ScheduleNode("initListenerAction", initListenerAction);
+        scheduler.add(node);
+
+        scheduler.start();
 
         //TODO 테스트용 삭제 예정
         saveLogin();
@@ -81,7 +125,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                ///TODO 각 버튼별로 동작 지정
                 if( view.getId() == btnSelectPlace0.getId() )
                 {
                     startMakeTeamActivity("Seoul");
@@ -177,5 +220,39 @@ public class MainActivity extends AppCompatActivity
         editor.putString("date",nowDate);
         editor.putString("id","sss");
         editor.commit();
+    }
+
+    private void checkPermissions()
+    {
+        int cameraPermissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA );
+        int phoneStatePermissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.READ_PHONE_STATE );
+
+        if (cameraPermissionCheckResult != PackageManager.PERMISSION_GRANTED || phoneStatePermissionCheckResult != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions( this, new String[]{ Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE }, PERMISSIONS_REQUEST_CODE );
+        }
+        else
+        {
+            scheduler.completeSchedule("checkPermissionsAction");
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK)
+            return;
+
+        switch (requestCode)
+        {
+            case PERMISSIONS_REQUEST_CODE :
+                scheduler.completeSchedule("checkPermissionsAction");
+                break;
+
+            default :
+                break;
+        }
     }
 }

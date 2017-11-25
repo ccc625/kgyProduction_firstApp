@@ -44,7 +44,6 @@ public class TeamMakeActivity extends AppCompatActivity
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private static final int CROP_FROM_IMAGE = 2;
-    private static final int PERMISSIONS_REQUEST_CAMERA = 1001;
 
     private static final int MODE_MIN = 101;
     private static final int MODE_MAX = 103;
@@ -293,8 +292,15 @@ public class TeamMakeActivity extends AppCompatActivity
                 }
                 else
                 {
-                    registerTeam();
-                    ///TODO 다음 액티비티로 넘겨주기
+                    NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
+                        @Override
+                        public void onResponse(JSONObject data)
+                        {
+                            ///TODO 다음 액티비티로 넘겨주기
+                        }
+                    };
+
+                    registerTeam(callback);
                     return;
                 }
 
@@ -308,7 +314,7 @@ public class TeamMakeActivity extends AppCompatActivity
             @Override
             public void doTakePhotoAction()
             {
-                checkPermission();
+                takePhotoAction();
             }
 
             @Override
@@ -338,7 +344,7 @@ public class TeamMakeActivity extends AppCompatActivity
         }
     }
 
-    private void registerTeam()
+    private void registerTeam(final NetworkdAdaptor.NetworkCallback inCallback)
     {
         HashMap<String, String> teamRegisterData = new HashMap<>();
 
@@ -360,6 +366,8 @@ public class TeamMakeActivity extends AppCompatActivity
             public void onResponse(JSONObject data)
             {
                 System.out.println(data.toString());
+
+                inCallback.onResponse(data);
             }
         };
 
@@ -390,19 +398,19 @@ public class TeamMakeActivity extends AppCompatActivity
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
 
-    private void checkPermission()
-    {
-        int permissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA );
-
-        if (permissionCheckResult != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions( this, new String[]{ Manifest.permission.CAMERA }, PERMISSIONS_REQUEST_CAMERA );
-        }
-        else
-        {
-            takePhotoAction();
-        }
-    }
+//    private void checkPermission()
+//    {
+//        int permissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA );
+//
+//        if (permissionCheckResult != PackageManager.PERMISSION_GRANTED)
+//        {
+//            ActivityCompat.requestPermissions( this, new String[]{ Manifest.permission.CAMERA }, PERMISSIONS_REQUEST_CAMERA );
+//        }
+//        else
+//        {
+//            takePhotoAction();
+//        }
+//    }
 
     private void takeAlbumAction()
     {
@@ -479,5 +487,4 @@ public class TeamMakeActivity extends AppCompatActivity
 
         return base64String;
     }
-
 }
