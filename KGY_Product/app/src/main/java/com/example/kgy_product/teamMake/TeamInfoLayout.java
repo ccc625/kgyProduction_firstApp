@@ -145,7 +145,12 @@ public class TeamInfoLayout extends LinearLayout
         HashMap<String, String> result = new HashMap<>();
 
         result.put("alcohol", drunkTypeSpinner.getSelectedItem().toString());
-        result.put("al_num", drunkQuantitySpinner.getSelectedItem().toString());
+
+        String alcoholNum = drunkQuantitySpinner.getSelectedItem().toString();
+
+        alcoholNum = alcoholNum.replace("병", "");
+
+        result.put("al_num", alcoholNum);
         result.put("team_comment", txtComment.getText().toString());
         result.put("team_you_comment", txtWish.getText().toString());
 

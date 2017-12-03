@@ -167,6 +167,8 @@ public class MakeTeamLayout extends LinearLayout
 
         String teamMemberNum = memberCountSpinner.getSelectedItem().toString();
 
+        teamMemberNum = teamMemberNum.replace("명", "");
+
         result.put("team_number", teamMemberNum);
 
         return result;
