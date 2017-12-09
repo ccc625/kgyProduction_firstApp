@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class ServerConfig
 {
     public static final String DEST = "http://52.78.124.40:8080/kgy";
-    public static final String LOCAL = "http://172.30.1.7:8080/kgy";
+    public static final String LOCAL = "http://172.30.1.58:8080/kgy";
 
     public static HashMap<String, String[]> ServiceList;
 
@@ -30,6 +30,11 @@ public class ServerConfig
             ServerMethod.setMakeRegister
     };
 
+    public static String[] SearchService =
+    {
+            ServerMethod.getTeamList
+    };
+
     public static void init()
     {
         ServiceList = new HashMap<>();
@@ -37,6 +42,7 @@ public class ServerConfig
         ServiceList.put("UserService", ServerConfig.UserService);
         ServiceList.put("sample", ServerConfig.sample);
         ServiceList.put("kgy/make", ServerConfig.CommonService);
+        ServiceList.put("kgy/search", ServerConfig.SearchService);
     }
 
 

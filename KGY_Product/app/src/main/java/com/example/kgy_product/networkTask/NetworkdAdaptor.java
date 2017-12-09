@@ -207,6 +207,29 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.setMakeRegister,serverCallback , jsonObject.toString());
     }
 
+    public void getTeamList(final NetworkCallback callback , HashMap map){
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            jsonObject.put("id", map.get("id"));
+            jsonObject.put("search", map.get("search"));
+        }
+        catch(JSONException e)
+        {
+
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+    }
+
     private void requestMethod( String serverMethod, final ServerCallback callback, String data)
     {
         String dest = "";
