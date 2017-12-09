@@ -12,6 +12,7 @@ import com.example.kgy_product.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ccc62 on 2017-06-06.
@@ -78,5 +79,28 @@ public class TeamSearchListAdapter extends BaseAdapter
         views.put(convertView, listviewitem);
 
         return convertView;
+    }
+
+    public void clear()
+    {
+        if( views != null )
+        {
+            for(Map.Entry<View, TeamSearchListItem> entry : views.entrySet())
+            {
+                entry.getKey().setOnClickListener(null);
+                entry.getValue().setName("");
+                entry.getValue().setIcon(null);
+            }
+
+            views.clear();
+        }
+
+        if( data != null )
+            data.clear();
+
+        data = null;
+        views = null;
+        inflater = null;
+        mContext = null;
     }
 }
