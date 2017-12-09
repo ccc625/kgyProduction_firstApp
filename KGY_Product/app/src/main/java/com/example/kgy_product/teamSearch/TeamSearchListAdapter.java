@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.kgy_product.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by ccc62 on 2017-06-06.
@@ -21,6 +22,7 @@ public class TeamSearchListAdapter extends BaseAdapter
     private Context mContext;
     private LayoutInflater inflater;
     private ArrayList<TeamSearchListItem> data;
+    private HashMap<View, TeamSearchListItem> views;
     private int itemLayout;
 
     public TeamSearchListAdapter(Context context, int itemLayout, ArrayList<TeamSearchListItem> data)
@@ -30,6 +32,11 @@ public class TeamSearchListAdapter extends BaseAdapter
         this.inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
         this.itemLayout = itemLayout;
+
+        if( this.views != null)
+            this.views.clear();
+
+        this.views = new HashMap<>();
     }
 
     public void setData( ArrayList<TeamSearchListItem> inData )
@@ -49,6 +56,7 @@ public class TeamSearchListAdapter extends BaseAdapter
         {
             convertView = inflater.inflate(itemLayout, parent, false);
         }
+
         TeamSearchListItem listviewitem = data.get(position);
 
         ImageView icon = (ImageView) convertView.findViewById(R.id.imgTeamSearchView);
@@ -56,6 +64,18 @@ public class TeamSearchListAdapter extends BaseAdapter
 
         TextView name = (TextView) convertView.findViewById(R.id.txtTeamSearchView);
         name.setText(listviewitem.getName());
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                System.out.println( views.get(v).getName() );
+            }
+        };
+
+        convertView.setOnClickListener(onClickListener);
+
+        views.put(convertView, listviewitem);
 
         return convertView;
     }

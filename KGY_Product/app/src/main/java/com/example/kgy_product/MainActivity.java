@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity
                 callback.excute();
             }
         };
+
         node = new ScheduleNode("initDisplayAction", initDisplayAction);
         scheduler.add(node);
 
