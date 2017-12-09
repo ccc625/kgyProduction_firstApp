@@ -43,18 +43,6 @@ public class MainActivity extends AppCompatActivity
 
     private void init()
     {
-        NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
-            @Override
-            public void onResponse(JSONObject data) {
-                System.out.println(data.toString());
-            }
-        };
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("id", "23891ec5b71d4be3866337edba12be5b");
-
-        NetworkdAdaptor.instance().getTeamList(networkCallback, map);
-
         Scheduler.OnCompleteSchedulerListener onCompleteSchedulerListener = new Scheduler.OnCompleteSchedulerListener()
         {
             public void onComplete()
