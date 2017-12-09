@@ -27,7 +27,11 @@ public class ServerConfig
     public static String[] CommonService =
     {
             ServerMethod.getCommonList,
-            ServerMethod.setMakeRegister,
+            ServerMethod.setMakeRegister
+    };
+
+    public static String[] SearchService =
+    {
             ServerMethod.getTeamList
     };
 
@@ -38,6 +42,7 @@ public class ServerConfig
         ServiceList.put("UserService", ServerConfig.UserService);
         ServiceList.put("sample", ServerConfig.sample);
         ServiceList.put("kgy/make", ServerConfig.CommonService);
+        ServiceList.put("kgy/search", ServerConfig.SearchService);
     }
 
 

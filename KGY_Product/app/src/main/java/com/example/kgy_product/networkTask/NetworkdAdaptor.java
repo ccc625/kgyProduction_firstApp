@@ -219,7 +219,8 @@ public class NetworkdAdaptor
 
         try
         {
-            jsonObject.put("data", map);
+            jsonObject.put("id", map.get("id"));
+            jsonObject.put("search", map.get("search"));
         }
         catch(JSONException e)
         {
