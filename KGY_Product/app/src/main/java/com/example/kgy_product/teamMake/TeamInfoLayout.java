@@ -108,7 +108,7 @@ public class TeamInfoLayout extends LinearLayout
 
         for(Map.Entry<String, String> entry : alcohol.entrySet() )
         {
-            arrAlcohol.add(entry.getValue());
+            arrAlcohol.add(entry.getKey());
         }
 
         spinnerAdapter = new ArrayAdapter(mContext, R.layout.support_simple_spinner_dropdown_item, arrAlcohol);
@@ -128,7 +128,7 @@ public class TeamInfoLayout extends LinearLayout
             {
                 objAlcohol = (JSONObject) arrAlcohol.get(i);
 
-                alcohol.put((String) objAlcohol.get("common_cd"), (String) objAlcohol.get("common_nm"));
+                alcohol.put((String) objAlcohol.get("common_nm"), (String) objAlcohol.get("common_cd"));
             }
         }
         catch( JSONException exception )
@@ -144,7 +144,7 @@ public class TeamInfoLayout extends LinearLayout
     {
         HashMap<String, String> result = new HashMap<>();
 
-        result.put("alcohol", drunkTypeSpinner.getSelectedItem().toString());
+        result.put("alcohol", alcohol.get(drunkTypeSpinner.getSelectedItem().toString()));
 
         String alcoholNum = drunkQuantitySpinner.getSelectedItem().toString();
 
