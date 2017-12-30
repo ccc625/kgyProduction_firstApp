@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
+import com.example.kgy_product.teamSearch.dataActivity;
 
 import org.json.JSONObject;
 
@@ -65,6 +66,27 @@ public class MainActivity extends AppCompatActivity
         node = new ScheduleNode("checkPermissionsAction", checkPermissionsAction);
         scheduler.add(node);
 
+        ScheduleNode.ScheduleAction getLocationAction = new ScheduleNode.ScheduleAction()
+        {
+            @Override
+            public void excute(final Callback callback) {
+
+                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                    @Override
+                    public void onResponse(JSONObject data) {
+                        System.out.println(data.toString());
+
+                        callback.excute();
+                    }
+                };
+
+                NetworkdAdaptor.instance().getCommonList(networkCallback, "LOCATION");
+            }
+        };
+
+        node = new ScheduleNode("getLocationAction", getLocationAction);
+        scheduler.add(node);
+
         ScheduleNode.ScheduleAction initDisplayAction = new ScheduleNode.ScheduleAction() {
             @Override
             public void excute(Callback callback)
@@ -112,8 +134,7 @@ public class MainActivity extends AppCompatActivity
     private void initDisplayObject()
     {
         btnSelectPlace0 = (Button) findViewById(R.id.btnSelectPlace0);
-        btnSelectPlace1 = (Button) findViewById(R.id.btnSelectPlace1);
-        btnSelectPlace2 = (Button) findViewById(R.id.btnSelectPlace2);
+
     }
 
     private void initListener()
@@ -126,25 +147,17 @@ public class MainActivity extends AppCompatActivity
                 {
                     startMakeTeamActivity("Seoul");
                 }
-                else if( view.getId() == btnSelectPlace1.getId() )
-                {
-                    startMakeTeamActivity("Gangbuk");
-                }
-                else if( view.getId() == btnSelectPlace2.getId() )
-                {
-                    startMakeTeamActivity("Gangnam");
-                }
+
             }
         };
 
         btnSelectPlace0.setOnClickListener( buttonClickListener );
-        btnSelectPlace1.setOnClickListener( buttonClickListener );
-        btnSelectPlace2.setOnClickListener( buttonClickListener );
+
     }
 
     private void startMakeTeamActivity(String location)
     {
-        Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+        Intent intent = new Intent(getApplicationContext(),dataActivity.class);
         intent.putExtra("location",location);
         startActivity(intent);
     }
@@ -252,4 +265,6 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
+    
 }
