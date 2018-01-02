@@ -2,6 +2,7 @@ package com.example.kgy_product;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -385,13 +388,35 @@ public class TeamMakeActivity extends AppCompatActivity
             @Override
             public void onResponse(JSONObject data)
             {
-                System.out.println(data.toString());
+                try {
+                    if(data.getBoolean("success") == true){
+                        String id = (String)data.getJSONArray("result").get(0);
+                        saveLogin(id);
+                    } else {
 
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 inCallback.onResponse(data);
             }
         };
 
         NetworkdAdaptor.instance().setMakeRegister(callback, teamRegisterData);
+    }
+
+    private void saveLogin(String id){
+        SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+
+        Date date = new Date();
+
+        SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
+        String nowDate = sdf.format(date);
+
+        editor.putString("date",nowDate);
+        editor.putString("id",id);
+        editor.commit();
     }
 
     private void removeListener()
