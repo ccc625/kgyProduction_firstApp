@@ -1,27 +1,23 @@
 package com.example.kgy_product;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
+import com.example.kgy_product.teamSearch.TeamData;
 import com.example.kgy_product.teamSearch.TeamSearchListAdapter;
-import com.example.kgy_product.teamSearch.TeamSearchListItem;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TeamSearchActivity extends AppCompatActivity
 {
@@ -32,7 +28,7 @@ public class TeamSearchActivity extends AppCompatActivity
     private GridView teamSearchList;
 
     private TeamSearchListAdapter teamSearchListAdapter;
-    private ArrayList<TeamSearchListItem> listData;
+    private ArrayList<TeamData> teamDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +37,20 @@ public class TeamSearchActivity extends AppCompatActivity
         setContentView(R.layout.activity_team_search);
 
         init();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        dispose();
+
+        super.onDestroy();
+    }
+
+    private void dispose()
+    {
+        teamSearchListAdapter.clear();
+        teamSearchListAdapter = null;
     }
 
     private void init()
@@ -64,17 +74,32 @@ public class TeamSearchActivity extends AppCompatActivity
                     @Override
                     public void onResponse(JSONObject data)
                     {
-                        System.out.println(data);
+                        System.out.println(data.toString());
+
+                        if( teamDatas == null )
+                            teamDatas = new ArrayList<>();
+
+                        teamDatas.clear();
+
+                        try
+                        {
+                            teamDatas.add(new TeamData(data.get("teamNo").toString(), data.get("teamNm").toString(), data.get("gender").toString(), data.get("imgFile").toString(), data.get("areaNm").toString()));
+                        }
+                        catch (JSONException exception)
+                        {
+                            exception.printStackTrace();
+                        }
 
                         ///TODO 로드된 팀 정보 저장
+                        callback.excute();
                     }
                 };
 
-                ///TODO 팀정보 로드 콜 완성시에 callback위치 옮겨야함
-                callback.excute();
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("id", "23891ec5b71d4be3866337edba12be5b");
+                map.put("search", "");
 
-                ///TODO 팀정보 로드
-//                NetworkdAdaptor.instance().getCommonList(networkCallback, "ALCOHOL");
+                NetworkdAdaptor.instance().getTeamList(networkCallback, map);
             }
         };
 
@@ -138,36 +163,8 @@ public class TeamSearchActivity extends AppCompatActivity
     {
         teamSearchListAdapter = new TeamSearchListAdapter( this, R.layout.team_search_view_layout, null );
 
-        setListData();
+        teamSearchListAdapter.setData( (ArrayList<TeamData>) teamDatas.clone() );
 
         teamSearchList.setAdapter( teamSearchListAdapter );
-    }
-
-    private void setListData()
-    {
-        if( listData == null )
-        {
-            listData = new ArrayList<TeamSearchListItem>();
-        }
-        ///* 테스트 데이터
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.man);
-
-        TeamSearchListItem teamSearchListItem = new TeamSearchListItem();
-        teamSearchListItem.setIcon( bitmap );
-        teamSearchListItem.setName( "test" );
-
-        listData.add( teamSearchListItem );
-
-        bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.woman);
-
-        teamSearchListItem = new TeamSearchListItem();
-        teamSearchListItem.setIcon( bitmap );
-        teamSearchListItem.setName( "test2" );
-
-        listData.add( teamSearchListItem );
-
-        //*/
-
-        teamSearchListAdapter.setData( (ArrayList<TeamSearchListItem>) listData.clone() );
     }
 }
