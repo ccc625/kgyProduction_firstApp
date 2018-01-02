@@ -1,19 +1,14 @@
 package com.example.kgy_product;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -31,7 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -424,20 +418,6 @@ public class TeamMakeActivity extends AppCompatActivity
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
 
-//    private void checkPermission()
-//    {
-//        int permissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA );
-//
-//        if (permissionCheckResult != PackageManager.PERMISSION_GRANTED)
-//        {
-//            ActivityCompat.requestPermissions( this, new String[]{ Manifest.permission.CAMERA }, PERMISSIONS_REQUEST_CAMERA );
-//        }
-//        else
-//        {
-//            takePhotoAction();
-//        }
-//    }
-
     private void takeAlbumAction()
     {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -482,7 +462,7 @@ public class TeamMakeActivity extends AppCompatActivity
                 if (extras != null)
                 {
                     Bitmap photo = extras.getParcelable("data");
-                    strImage = getBase64String(photo);
+                    strImage = BitmapUtil.getStringToBitamp(photo);
 
                     if( imageSelectLayout != null )
                     {
@@ -499,18 +479,5 @@ public class TeamMakeActivity extends AppCompatActivity
                 }
             }
         }
-    }
-
-    private String getBase64String(Bitmap bitmap)
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        byte[] imageBytes = baos.toByteArray();
-
-        String base64String = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-
-        return base64String;
     }
 }
