@@ -13,6 +13,7 @@ import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.teamSearch.TeamData;
 import com.example.kgy_product.teamSearch.TeamSearchListAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -83,14 +84,21 @@ public class TeamSearchActivity extends AppCompatActivity
 
                         try
                         {
-                            teamDatas.add(new TeamData(data.get("teamNo").toString(), data.get("teamNm").toString(), data.get("gender").toString(), data.get("imgFile").toString(), data.get("areaNm").toString()));
+                            JSONArray result = data.getJSONArray("result");
+
+                            JSONObject team;
+                            for( int i = 0; i < result.length(); i++ )
+                            {
+                                team = result.getJSONObject(i);
+
+                                teamDatas.add(new TeamData(team.get("teamNo").toString(), team.get("teamNm").toString(), team.get("gender").toString(), team.get("imgFile").toString(), team.get("areaNm").toString()));
+                            }
                         }
                         catch (JSONException exception)
                         {
                             exception.printStackTrace();
                         }
 
-                        ///TODO 로드된 팀 정보 저장
                         callback.excute();
                     }
                 };
