@@ -1,5 +1,6 @@
 package com.example.kgy_product;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -103,8 +104,10 @@ public class TeamSearchActivity extends AppCompatActivity
                     }
                 };
 
+                Intent intent = getIntent();
+
                 HashMap<String, Object> map = new HashMap<>();
-                map.put("id", "23891ec5b71d4be3866337edba12be5b");
+                map.put("id", intent.getStringExtra("id"));
                 map.put("search", "");
 
                 NetworkdAdaptor.instance().getTeamList(networkCallback, map);
@@ -175,4 +178,6 @@ public class TeamSearchActivity extends AppCompatActivity
 
         teamSearchList.setAdapter( teamSearchListAdapter );
     }
+
+
 }

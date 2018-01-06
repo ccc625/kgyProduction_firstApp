@@ -398,7 +398,7 @@ public class TeamMakeActivity extends AppCompatActivity
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                inCallback.onResponse(data);
+            //    inCallback.onResponse(data);
             }
         };
 
@@ -406,17 +406,28 @@ public class TeamMakeActivity extends AppCompatActivity
     }
 
     private void saveLogin(String id){
-        SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
-        SharedPreferences.Editor editor = setting.edit();
+        try {
+            SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
+            SharedPreferences.Editor editor = setting.edit();
 
-        Date date = new Date();
+            Date date = new Date();
 
-        SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
-        String nowDate = sdf.format(date);
+            SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
+            String nowDate = sdf.format(date);
 
-        editor.putString("date",nowDate);
-        editor.putString("id",id);
-        editor.commit();
+            editor.putString("date",nowDate);
+            editor.putString("id",id);
+            editor.commit();
+
+
+            Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
+            intent.putExtra("id",id);
+            startActivity(intent);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void removeListener()

@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     private Button btnSelectPlace2;
     private Scheduler scheduler;
 
+    private String appId = null;
+
     private View.OnClickListener buttonClickListener;
 
     @Override
@@ -92,12 +94,11 @@ public class MainActivity extends AppCompatActivity
 
         scheduler.start();
 
-        //TODO 테스트용 삭제 예정
-        saveLogin();
-
         if(isLoginCheck())
         {
-            //TODO 디비 접속 로그인
+            if(appId != null && !"".equals(appId)){
+                startTeamSearchActivity(appId);
+            }
         }
         else
         {
@@ -154,13 +155,27 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void startTeamSearchActivity(String id){
+        Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
+    }
+
     private boolean isLoginCheck(){
         SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
         String loginDate = setting.getString("date","");
+        appId = setting.getString("id","");
 
         String now = nowDate();
 
-        if(!(loginDate != null && !"".equals(loginDate)) ){
+        //TODO 삭제요망
+        SharedPreferences.Editor editor = setting.edit();
+        editor.remove("date");
+        editor.remove("id");
+        editor.commit();
+        return false;
+
+        /*if(!(loginDate != null && !"".equals(loginDate)) ){
             return false;
         }
 
@@ -172,7 +187,7 @@ public class MainActivity extends AppCompatActivity
             editor.remove("id");
             editor.commit();
             return false;
-        }
+        }*/
     }
 
     private String nowDate(){
@@ -207,21 +222,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return result;
-    }
-
-    //TODO 테스트용 삭제 예정
-    private void saveLogin(){
-        SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
-        SharedPreferences.Editor editor = setting.edit();
-
-        Date date = new Date();
-
-        SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
-        String nowDate = sdf.format(date);
-
-        editor.putString("date",nowDate);
-        editor.putString("id","sss");
-        editor.commit();
     }
 
     private void checkPermissions()
