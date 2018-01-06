@@ -169,13 +169,13 @@ public class MainActivity extends AppCompatActivity
         String now = nowDate();
 
         //TODO 삭제요망
-        SharedPreferences.Editor editor = setting.edit();
+      /*  SharedPreferences.Editor editor = setting.edit();
         editor.remove("date");
         editor.remove("id");
         editor.commit();
         return false;
-
-        /*if(!(loginDate != null && !"".equals(loginDate)) ){
+*/
+        if(!(loginDate != null && !"".equals(loginDate)) ){
             return false;
         }
 
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
             editor.remove("id");
             editor.commit();
             return false;
-        }*/
+        }
     }
 
     private String nowDate(){

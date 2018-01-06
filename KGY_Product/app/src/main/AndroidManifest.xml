@@ -28,7 +28,9 @@
             android:name=".TeamSearchActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
-
+        <activity android:name=".BoardActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 
 </manifest>

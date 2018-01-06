@@ -1,6 +1,7 @@
 package com.example.kgy_product.teamSearch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kgy_product.BitmapUtil;
+import com.example.kgy_product.BoardActivity;
 import com.example.kgy_product.R;
 
 import java.util.ArrayList;
@@ -72,7 +74,10 @@ public class TeamSearchListAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                System.out.println( views.get(v).getTeamNm() );
+                System.out.println( views.get(v).getTeamNo() );
+                Intent intent = new Intent(mContext, BoardActivity.class);
+                intent.putExtra("id",views.get(v).getTeamNo() );
+                mContext.startActivity(intent);
             }
         };
 
