@@ -13,7 +13,9 @@ import com.example.kgy_product.scheduler.Scheduler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -81,7 +83,9 @@ public class BoardActivity extends AppCompatActivity {
                             obj = list.getJSONObject(0);
                             boardImgView.setImageBitmap(BitmapUtil.getBitmapToString(obj.getString("imgFile")));
                             teamNameView.setText(obj.getString("teamNm"));
-                            String context = obj.getString("teamNm").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서";
+                            String context = obj.getString("teamComment").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서"
+                                            +termTime(obj.getString("regDate").toString())+"분 전부터 기다리는중..."
+                                            +"\n우리는 "+obj.getString("teamYouComment").toString()+"을 원해요~!";
 
                             teamContext.setText(context);
                         } catch (Exception e){
@@ -101,5 +105,27 @@ public class BoardActivity extends AppCompatActivity {
         scheduler.add(node);
 
         scheduler.start();
+    }
+
+    //시간 차이
+    private String termTime(String regTime){
+        long minute = 0;
+        try {
+            Date dt = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmm");
+
+            dt = sdf.parse(sdf.format(dt));
+            long curDateTime = dt.getTime();
+
+            Date regDt = sdf.parse(regTime);
+            long regDateTime = regDt.getTime();
+
+            minute = (curDateTime - regDateTime) / 60000;
+        } catch (Exception e){
+
+        }
+
+
+        return String.valueOf(minute);
     }
 }
