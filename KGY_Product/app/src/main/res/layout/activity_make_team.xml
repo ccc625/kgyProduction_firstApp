@@ -8,35 +8,41 @@
     android:paddingLeft="11dp"
     android:paddingRight="11dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@drawable/mainlogo"/>
-    
-    <LinearLayout
-        android:id="@+id/makeTeamContentLayout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="350dp">
-        <ScrollView
-            android:id="@+id/makeTeamContentScroll"
-            android:layout_width="match_parent"
-            android:layout_height="350dp">
-        </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/makeTeamBottomLayout"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/get" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/mainlogo"/>
 
+            <LinearLayout
+                android:id="@+id/makeTeamContentLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
+                <ScrollView
+                    android:id="@+id/makeTeamContentScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp">
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/makeTeamBottomLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

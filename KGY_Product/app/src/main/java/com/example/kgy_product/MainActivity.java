@@ -25,21 +25,19 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
 {
-
-    ListView DataAccept;
-
-    AreaAdapter adapter;
-
-
-
-
     private static final int PERMISSIONS_REQUEST_CODE = 1001;
 
     private Button btnSelectPlace0;
 
     private Scheduler scheduler;
 
+    private String appId = null;
+
     private View.OnClickListener buttonClickListener;
+
+    private ListView DataAccept;
+
+    private AreaAdapter adapter;
 
     //ArrayList<Areadata> areaList = new ArrayList<Areadata>();
 
@@ -53,9 +51,6 @@ public class MainActivity extends AppCompatActivity
         init();
 
 //        btnSelectPlace0.setOnClickListener( buttonClickListener );
-
-
-
     }
 
 
@@ -171,12 +166,14 @@ public class MainActivity extends AppCompatActivity
 
         scheduler.start();
 
-        //TODO 테스트용 삭제 예정
-        saveLogin();
-
-        if(isLoginCheck()){
-            //TODO 디비 접속 로그인
-        } else {
+        if(isLoginCheck())
+        {
+            if(appId != null && !"".equals(appId)){
+                startTeamSearchActivity(appId);
+            }
+        }
+        else
+        {
             initDisplayObject();
             initListener();
 
@@ -221,14 +218,26 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    public void startTeamSearchActivity(String id){
+        Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
+    }
 
     private boolean isLoginCheck(){
         SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
         String loginDate = setting.getString("date","");
+        appId = setting.getString("id","");
 
         String now = nowDate();
 
+        //TODO 삭제요망
+      /*  SharedPreferences.Editor editor = setting.edit();
+        editor.remove("date");
+        editor.remove("id");
+        editor.commit();
+        return false;
+*/
         if(!(loginDate != null && !"".equals(loginDate)) ){
             return false;
         }
@@ -276,21 +285,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return result;
-    }
-
-    //TODO 테스트용 삭제 예정
-    private void saveLogin(){
-        SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
-        SharedPreferences.Editor editor = setting.edit();
-
-        Date date = new Date();
-
-        SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
-        String nowDate = sdf.format(date);
-
-        editor.putString("date",nowDate);
-        editor.putString("id","sss");
-        editor.commit();
     }
 
     private void checkPermissions()

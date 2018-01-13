@@ -22,8 +22,6 @@ public class ImageSelectLayout extends LinearLayout
     private LinearLayout rootLayout;
     private Button btnUploadPicture;
     private ImageView iv_UserPhoto;
-    private int id_view;
-    private String absoultePath;
 
     private OnClickListener onClickListener;
     private PhotoActionListener photoActionListener;

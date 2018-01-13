@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class TeamInfoLayout extends LinearLayout
 
         for(Map.Entry<String, String> entry : alcohol.entrySet() )
         {
-            arrAlcohol.add(entry.getValue());
+            arrAlcohol.add(entry.getKey());
         }
 
         spinnerAdapter = new ArrayAdapter(mContext, R.layout.support_simple_spinner_dropdown_item, arrAlcohol);
@@ -118,6 +119,8 @@ public class TeamInfoLayout extends LinearLayout
     {
         alcohol = new HashMap<>();
 
+        ///TODO @jimin arrAlcohol정렬 필요
+
         try
         {
             JSONObject objAlcohol;
@@ -125,7 +128,7 @@ public class TeamInfoLayout extends LinearLayout
             {
                 objAlcohol = (JSONObject) arrAlcohol.get(i);
 
-                alcohol.put((String) objAlcohol.get("common_cd"), (String) objAlcohol.get("common_nm"));
+                alcohol.put((String) objAlcohol.get("common_nm"), (String) objAlcohol.get("common_cd"));
             }
         }
         catch( JSONException exception )
@@ -141,8 +144,13 @@ public class TeamInfoLayout extends LinearLayout
     {
         HashMap<String, String> result = new HashMap<>();
 
-        result.put("alcohol", drunkTypeSpinner.getSelectedItem().toString());
-        result.put("al_num", drunkQuantitySpinner.getSelectedItem().toString());
+        result.put("alcohol", alcohol.get(drunkTypeSpinner.getSelectedItem().toString()));
+
+        String alcoholNum = drunkQuantitySpinner.getSelectedItem().toString();
+
+        alcoholNum = alcoholNum.replace("병", "");
+
+        result.put("al_num", alcoholNum);
         result.put("team_comment", txtComment.getText().toString());
         result.put("team_you_comment", txtWish.getText().toString());
 

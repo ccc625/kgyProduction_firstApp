@@ -11,4 +11,9 @@ public class ServerMethod
     public static final String openSampleList4 = "openSampleList4";
     public static final String getCommonList = "getCommonList";
     public static final String setMakeRegister = "setMakeRegister";
+    public static final String getTeamList = "getTeamList";
+    public static final String getTeamInfo = "getTeamInfo";
+    public static final String getBoardList = "getBoardList";
+    public static final String setBoardInfo = "setBoardInfo";
+
 }

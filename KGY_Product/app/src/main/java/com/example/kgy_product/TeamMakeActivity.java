@@ -1,19 +1,15 @@
 package com.example.kgy_product;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -31,8 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -391,13 +388,46 @@ public class TeamMakeActivity extends AppCompatActivity
             @Override
             public void onResponse(JSONObject data)
             {
-                System.out.println(data.toString());
+                try {
+                    if(data.getBoolean("success") == true){
+                        String id = (String)data.getJSONArray("result").get(0);
+                        saveLogin(id);
+                    } else {
 
-                inCallback.onResponse(data);
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            //    inCallback.onResponse(data);
             }
         };
 
         NetworkdAdaptor.instance().setMakeRegister(callback, teamRegisterData);
+    }
+
+    private void saveLogin(String id){
+        try {
+            SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
+            SharedPreferences.Editor editor = setting.edit();
+
+            Date date = new Date();
+
+            SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
+            String nowDate = sdf.format(date);
+
+            editor.putString("date",nowDate);
+            editor.putString("id",id);
+            editor.commit();
+
+
+            Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
+            intent.putExtra("id",id);
+            startActivity(intent);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void removeListener()
@@ -423,20 +453,6 @@ public class TeamMakeActivity extends AppCompatActivity
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
-
-//    private void checkPermission()
-//    {
-//        int permissionCheckResult = ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA );
-//
-//        if (permissionCheckResult != PackageManager.PERMISSION_GRANTED)
-//        {
-//            ActivityCompat.requestPermissions( this, new String[]{ Manifest.permission.CAMERA }, PERMISSIONS_REQUEST_CAMERA );
-//        }
-//        else
-//        {
-//            takePhotoAction();
-//        }
-//    }
 
     private void takeAlbumAction()
     {
@@ -482,7 +498,7 @@ public class TeamMakeActivity extends AppCompatActivity
                 if (extras != null)
                 {
                     Bitmap photo = extras.getParcelable("data");
-                    strImage = getBase64String(photo);
+                    strImage = BitmapUtil.getStringToBitamp(photo);
 
                     if( imageSelectLayout != null )
                     {
@@ -499,18 +515,5 @@ public class TeamMakeActivity extends AppCompatActivity
                 }
             }
         }
-    }
-
-    private String getBase64String(Bitmap bitmap)
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        byte[] imageBytes = baos.toByteArray();
-
-        String base64String = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-
-        return base64String;
     }
 }

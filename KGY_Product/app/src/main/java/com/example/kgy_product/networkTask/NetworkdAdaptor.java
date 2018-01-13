@@ -99,6 +99,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.initUser, serverCallback, jsonObject.toString());
     }
 
+    //로그인 정보
     public void registerUser(final NetworkCallback callback, String name, String age, String empId)
     {
         ServerCallback serverCallback = new ServerCallback() {
@@ -124,6 +125,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.registerUser, serverCallback, jsonObject.toString());
     }
 
+    //Sample
     public void openSampleList4(final NetworkCallback callback, String name, String age, String empId)
     {
         ServerCallback serverCallback = new ServerCallback() {
@@ -149,6 +151,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.openSampleList4, serverCallback, jsonObject.toString());
     }
 
+    //공통 코드 조회
     public void getCommonList(final NetworkCallback callback, String upperKey)
     {
         ServerCallback serverCallback = new ServerCallback()
@@ -173,6 +176,7 @@ public class NetworkdAdaptor
         requestMethod(ServerMethod.getCommonList, serverCallback, jsonObject.toString());
     }
 
+    //팀 저장
     public void setMakeRegister(final NetworkCallback callback , HashMap map)
     {
         ServerCallback serverCallback = new ServerCallback() {
@@ -197,6 +201,7 @@ public class NetworkdAdaptor
             jsonObject.put("team_reg_time", map.get("team_reg_time"));
             jsonObject.put("team_phone", map.get("team_phone"));
             jsonObject.put("img_file", map.get("img_file"));
+            jsonObject.put("team_number", map.get("team_number"));
         }
         catch(JSONException e)
         {
@@ -204,6 +209,101 @@ public class NetworkdAdaptor
             e.printStackTrace();
         }
         requestMethod(ServerMethod.setMakeRegister,serverCallback , jsonObject.toString());
+    }
+
+    //팀 리스트
+    public void getTeamList(final NetworkCallback callback , HashMap map){
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            jsonObject.put("id", map.get("id"));
+            jsonObject.put("search", map.get("search"));
+        }
+        catch(JSONException e)
+        {
+
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+    }
+
+    //팀 상세정보
+    public void getTeamInfo(final NetworkCallback callback , String id){
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            jsonObject.put("id", id);
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+    }
+
+    //게시판 리스트
+    public void getBoardList(final NetworkCallback callback , String id){
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            jsonObject.put("id", id);
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+    }
+
+    //게시판 등록
+    public void setBoardInfo(final NetworkCallback callback , HashMap map){
+        ServerCallback serverCallback = new ServerCallback() {
+            @Override
+            public void onResponse(JSONObject data) {
+                callback.onResponse(data);
+            }
+        };
+
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            if(map.get("boardUpper") != null && "".equals(map.get("boardUpper"))){
+                jsonObject.put("boardUpper", map.get("boardUpper"));
+            }
+
+            jsonObject.put("teamNo", map.get("teamNo"));
+            jsonObject.put("boardComment", map.get("boardComment"));
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
     }
 
     private void requestMethod( String serverMethod, final ServerCallback callback, String data)
