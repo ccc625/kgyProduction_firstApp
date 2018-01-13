@@ -37,29 +37,29 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="서울"
+            android:text="데이터 받아오기"
             android:id="@+id/btnSelectPlace0"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="35dp"
             android:layout_marginTop="63dp" />
 
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="경기한강이북"
-            android:id="@+id/btnSelectPlace1"
-            android:layout_alignTop="@+id/btnSelectPlace0"
-            android:layout_centerHorizontal="true" />
 
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="경기한강이남"
-            android:layout_marginEnd="33dp"
-            android:id="@+id/btnSelectPlace2"
-            android:layout_alignBaseline="@+id/btnSelectPlace1"
-            android:layout_alignBottom="@+id/btnSelectPlace1"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+        <ListView
+            android:id="@+id/dataAccept"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:numColumns="3"
+            android:divider="#ffcc22"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+
+        </ListView>
+        </RelativeLayout>
+
+
+
+
 </LinearLayout>
