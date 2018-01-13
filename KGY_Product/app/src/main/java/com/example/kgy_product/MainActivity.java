@@ -10,28 +10,40 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
-import com.example.kgy_product.teamSearch.dataActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
 {
+
+    ListView DataAccept;
+
+    AreaAdapter adapter;
+
+
+
+
     private static final int PERMISSIONS_REQUEST_CODE = 1001;
 
     private Button btnSelectPlace0;
-    private Button btnSelectPlace1;
-    private Button btnSelectPlace2;
+
     private Scheduler scheduler;
 
     private View.OnClickListener buttonClickListener;
 
+    //ArrayList<Areadata> areaList = new ArrayList<Areadata>();
+
+   // RelativeLayout relative = (RelativeLayout)findViewById(R.id.relative);
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,7 +51,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         init();
+
+//        btnSelectPlace0.setOnClickListener( buttonClickListener );
+
+
+
     }
+
+
 
     private void init()
     {
@@ -69,20 +88,59 @@ public class MainActivity extends AppCompatActivity
         ScheduleNode.ScheduleAction getLocationAction = new ScheduleNode.ScheduleAction()
         {
             @Override
-            public void excute(final Callback callback) {
+        public void excute(final Callback callback) {
 
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
-                    @Override
-                    public void onResponse(JSONObject data) {
-                        System.out.println(data.toString());
+        NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+            @Override
+            public void onResponse(final JSONObject data) {
+                try {
+                    System.out.println(data.toString());
 
-                        callback.excute();
+                    JSONArray arr = new JSONArray();
+                    arr = data.getJSONArray("result");
+
+                    final ArrayList<Areadata> areaList = new ArrayList<>(); //서버 정보를 담을 배열
+
+
+                    for (int i = 0; i <arr.length(); i++){
+                        Areadata areaData = new Areadata();
+                        JSONObject obj = arr.getJSONObject(i);
+
+                        areaData.setCode(obj.getString("common_cd"));
+                        areaData.setName(obj.getString("common_nm"));
+
+                        areaList.add(areaData);
+
+                        System.out.println(areaList.get(i).getName());
                     }
-                };
 
-                NetworkdAdaptor.instance().getCommonList(networkCallback, "LOCATION");
+                    DataAccept = (ListView)findViewById(R.id.dataAccept);
+                    adapter = new AreaAdapter(MainActivity.this,R.layout.customview,areaList);
+                    DataAccept.setAdapter(adapter);
+
+                   /* DataAccept.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+
+                            Intent intent = new Intent(getApplicationContext(),TeamMakeActivity.class);
+                           // intent.putExtra("common_cd",);
+                            startActivity(intent);
+                        }
+                    });*/
+
+                    callback.excute();
+                } catch (Exception e){
+
+                }
+
+
             }
         };
+
+        NetworkdAdaptor.instance().getCommonList(networkCallback, "LOCATION");
+    }
+    };
 
         node = new ScheduleNode("getLocationAction", getLocationAction);
         scheduler.add(node);
@@ -95,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 callback.excute();
             }
         };
+
         node = new ScheduleNode("initDisplayAction", initDisplayAction);
         scheduler.add(node);
 
@@ -143,24 +202,26 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                if( view.getId() == btnSelectPlace0.getId() )
-                {
-                    startMakeTeamActivity("Seoul");
-                }
+                switch (view.getId()){
+                    case R.id.btnSelectPlace0:
+                        try{
 
+
+
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }
             }
+
+
         };
 
-        btnSelectPlace0.setOnClickListener( buttonClickListener );
+
 
     }
 
-    private void startMakeTeamActivity(String location)
-    {
-        Intent intent = new Intent(getApplicationContext(),dataActivity.class);
-        intent.putExtra("location",location);
-        startActivity(intent);
-    }
+
 
     private boolean isLoginCheck(){
         SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
@@ -266,5 +327,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    
+
 }

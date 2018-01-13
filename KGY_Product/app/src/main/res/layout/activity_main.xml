@@ -45,5 +45,21 @@
             android:layout_marginTop="63dp" />
 
 
-    </RelativeLayout>
+        <ListView
+            android:id="@+id/dataAccept"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:numColumns="3"
+            android:divider="#ffcc22"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+
+        </ListView>
+        </RelativeLayout>
+
+
+
+
 </LinearLayout>
