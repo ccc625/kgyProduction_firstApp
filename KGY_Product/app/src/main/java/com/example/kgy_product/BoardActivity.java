@@ -6,16 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kgy_product.networkTask.NetworkTask;
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.util.BitmapUtil;
+import com.example.kgy_product.util.TimeUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -66,6 +68,7 @@ public class BoardActivity extends AppCompatActivity {
             {
                 System.out.println("onCompleteScheduler");
 
+                ///* NOTE @jimin setBoardInfo테스트용 코드
                 NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
                     @Override
                     public void onResponse(JSONObject data)
@@ -80,6 +83,7 @@ public class BoardActivity extends AppCompatActivity {
                 hashMap.put("boardComment", "아아아아아아아아아아아");
 
                 NetworkdAdaptor.instance().setBoardInfo(networkCallback, hashMap);
+                //*/
             }
         };
 
@@ -104,9 +108,11 @@ public class BoardActivity extends AppCompatActivity {
                             obj = list.getJSONObject(0);
                             boardImgView.setImageBitmap(BitmapUtil.getBitmapToString(obj.getString("imgFile")));
                             teamNameView.setText(obj.getString("teamNm"));
-                            String context = obj.getString("teamNm").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서";
-                            teamNo = obj.getString("teamNo");
+                            String context = obj.getString("teamComment").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서"
+                                            + TimeUtil.termTime(obj.getString("regDate").toString())+"분 전부터 기다리는중..."
+                                            +"\n우리는 "+obj.getString("teamYouComment").toString()+"을 원해요~!";
 
+                            teamNo = obj.getString("teamNo");
                             teamContext.setText(context);
 
                             callback.excute();
