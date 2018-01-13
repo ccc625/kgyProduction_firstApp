@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.kgy_product.areaSelect.AreaAdapter;
+import com.example.kgy_product.areaSelect.Areadata;
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;

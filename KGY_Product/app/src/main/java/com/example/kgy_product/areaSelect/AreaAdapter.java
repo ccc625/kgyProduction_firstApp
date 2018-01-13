@@ -1,4 +1,4 @@
-package com.example.kgy_product;
+package com.example.kgy_product.areaSelect;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.kgy_product.R;
+import com.example.kgy_product.TeamMakeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

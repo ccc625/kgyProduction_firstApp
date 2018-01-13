@@ -6,16 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kgy_product.networkTask.NetworkTask;
 import com.example.kgy_product.networkTask.NetworkdAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
+import com.example.kgy_product.util.BitmapUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by deokhwan on 2018-01-06.
@@ -23,9 +24,11 @@ import java.util.Objects;
 
 public class BoardActivity extends AppCompatActivity {
 
-    ImageView boardImgView;
-    TextView teamNameView;
-    TextView teamContext;
+    private ImageView boardImgView;
+    private TextView teamNameView;
+    private TextView teamContext;
+
+    private String teamNo;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -62,19 +65,39 @@ public class BoardActivity extends AppCompatActivity {
             public void onComplete()
             {
                 System.out.println("onCompleteScheduler");
+
+                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                    @Override
+                    public void onResponse(JSONObject data)
+                    {
+                        System.out.println(data.toString());
+                    }
+                };
+
+                HashMap<String, String> hashMap = new HashMap();
+                hashMap.put("teamNo", teamNo);
+                hashMap.put("boardUpper", teamNo);
+                hashMap.put("boardComment", "아아아아아아아아아아아");
+
+                NetworkdAdaptor.instance().setBoardInfo(networkCallback, hashMap);
             }
         };
 
         Scheduler scheduler = new Scheduler(onCompleteScheduler);
         ScheduleNode node;
 
-        ScheduleNode.ScheduleAction infoTeamInfoAction = new ScheduleNode.ScheduleAction() {
+        ScheduleNode.ScheduleAction infoTeamInfoAction = new ScheduleNode.ScheduleAction()
+        {
             @Override
-            public void excute(Callback callback) {
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+            public void excute(final Callback callback)
+            {
+                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback()
+                {
                     @Override
-                    public void onResponse(JSONObject data) {
-                        try {
+                    public void onResponse(JSONObject data)
+                    {
+                        try
+                        {
                             JSONArray list = new JSONArray();
                             list = data.getJSONArray("result");
                             JSONObject obj = new JSONObject();
@@ -82,10 +105,15 @@ public class BoardActivity extends AppCompatActivity {
                             boardImgView.setImageBitmap(BitmapUtil.getBitmapToString(obj.getString("imgFile")));
                             teamNameView.setText(obj.getString("teamNm"));
                             String context = obj.getString("teamNm").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서";
+                            teamNo = obj.getString("teamNo");
 
                             teamContext.setText(context);
-                        } catch (Exception e){
 
+                            callback.excute();
+                        }
+                        catch (JSONException e)
+                        {
+                            System.out.println("aa");
                         }
                     }
                 };

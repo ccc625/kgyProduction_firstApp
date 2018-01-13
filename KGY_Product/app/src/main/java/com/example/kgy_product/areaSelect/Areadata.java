@@ -1,4 +1,4 @@
-package com.example.kgy_product;
+package com.example.kgy_product.areaSelect;
 
 /**
  * Created by lee on 2018-01-06.

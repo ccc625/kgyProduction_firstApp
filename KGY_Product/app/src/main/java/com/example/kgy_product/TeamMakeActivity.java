@@ -22,6 +22,7 @@ import com.example.kgy_product.teamMake.BottomLayout;
 import com.example.kgy_product.teamMake.ImageSelectLayout;
 import com.example.kgy_product.teamMake.MakeTeamLayout;
 import com.example.kgy_product.teamMake.TeamInfoLayout;
+import com.example.kgy_product.util.BitmapUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

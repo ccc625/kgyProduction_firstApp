@@ -292,7 +292,8 @@ public class NetworkdAdaptor
 
         try
         {
-            if(map.get("boardUpper") != null && "".equals(map.get("boardUpper"))){
+            if(map.containsKey("boardUpper")  && !map.get("boardUpper").equals(""))
+            {
                 jsonObject.put("boardUpper", map.get("boardUpper"));
             }
 

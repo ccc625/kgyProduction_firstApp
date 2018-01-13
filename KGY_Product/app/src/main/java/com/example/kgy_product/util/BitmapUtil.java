@@ -1,4 +1,4 @@
-package com.example.kgy_product;
+package com.example.kgy_product.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
