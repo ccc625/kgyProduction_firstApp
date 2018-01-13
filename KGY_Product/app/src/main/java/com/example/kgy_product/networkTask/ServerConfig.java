@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class ServerConfig
 {
     public static final String DEST = "http://52.78.124.40:8080/kgy";
-    public static final String LOCAL = "http://172.30.1.51:8080/kgy";
+    public static final String LOCAL = "http://172.30.1.38:8080/kgy";
 
     public static HashMap<String, String[]> ServiceList;
 
@@ -32,7 +32,10 @@ public class ServerConfig
 
     public static String[] SearchService =
     {
-            ServerMethod.getTeamList
+            ServerMethod.getTeamList,
+            ServerMethod.getBoardList,
+            ServerMethod.getTeamInfo,
+            ServerMethod.setBoardInfo
     };
 
     public static void init()

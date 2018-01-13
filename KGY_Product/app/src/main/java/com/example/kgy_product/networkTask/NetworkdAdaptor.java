@@ -254,7 +254,7 @@ public class NetworkdAdaptor
         {
             e.printStackTrace();
         }
-        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+        requestMethod(ServerMethod.getTeamInfo,serverCallback , jsonObject.toString());
     }
 
     //게시판 리스트
@@ -276,7 +276,7 @@ public class NetworkdAdaptor
         {
             e.printStackTrace();
         }
-        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+        requestMethod(ServerMethod.getBoardList,serverCallback , jsonObject.toString());
     }
 
     //게시판 등록
@@ -303,7 +303,7 @@ public class NetworkdAdaptor
         {
             e.printStackTrace();
         }
-        requestMethod(ServerMethod.getTeamList,serverCallback , jsonObject.toString());
+        requestMethod(ServerMethod.setBoardInfo,serverCallback , jsonObject.toString());
     }
 
     private void requestMethod( String serverMethod, final ServerCallback callback, String data)
