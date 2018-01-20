@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            app:srcCompat="@drawable/mainlogo"
+            app:srcCompat="@drawable/main_logo"
             android:id="@+id/imageView"
             android:layout_weight="1"
             android:layout_marginTop="53dp"
@@ -33,18 +33,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="154dp">
-
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="데이터 받아오기"
-            android:id="@+id/btnSelectPlace0"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="63dp" />
-
-
         <ListView
             android:id="@+id/dataAccept"
             android:layout_width="250dp"

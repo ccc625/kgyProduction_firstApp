@@ -23,6 +23,7 @@ public class TimeUtil
             long regDateTime = regDt.getTime();
 
             minute = (curDateTime - regDateTime) / 60000;
+
         } catch (Exception e){
 
         }

@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/mainlogo"/>
+                android:src="@drawable/main_logo"/>
 
             <LinearLayout
                 android:id="@+id/makeTeamContentLayout"

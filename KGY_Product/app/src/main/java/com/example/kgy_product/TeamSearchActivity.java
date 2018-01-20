@@ -160,7 +160,7 @@ public class TeamSearchActivity extends AppCompatActivity
     {
         btnSearch = (ImageButton) findViewById( R.id.btnSearch );
         txtSearch = (EditText) findViewById( R.id.txtSearch );
-        btnRefresh = (Button) findViewById( R.id.btnRefresh );
+        //btnRefresh = (Button) findViewById( R.id.btnRefresh );
 
         teamSearchList = (GridView) findViewById( R.id.teamSearchList );
     }
