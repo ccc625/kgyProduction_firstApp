@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.teamSearch.TeamData;
@@ -72,7 +72,7 @@ public class TeamSearchActivity extends AppCompatActivity
             @Override
             public void excute(final Callback callback)
             {
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
                     @Override
                     public void onResponse(JSONObject data)
                     {
@@ -110,7 +110,7 @@ public class TeamSearchActivity extends AppCompatActivity
                 map.put("id", intent.getStringExtra("id"));
                 map.put("search", "");
 
-                NetworkdAdaptor.instance().getTeamList(networkCallback, map);
+                NetworkAdaptor.instance().getTeamList(networkCallback, map);
             }
         };
 

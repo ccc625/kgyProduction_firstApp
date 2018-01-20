@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class ServerConfig
 {
     public static final String DEST = "http://52.78.124.40:8080/kgy";
-    public static final String LOCAL = "http://172.30.1.38:8080/kgy";
+    public static final String LOCAL = "http://172.30.1.54:8080/kgy";
 
     public static HashMap<String, String[]> ServiceList;
 
