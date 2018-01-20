@@ -179,6 +179,7 @@ public class BoardActivity extends AppCompatActivity {
                 };
 
                 HashMap<String, String> hashMap = new HashMap<>();
+                ///TODO @jimin teamNo에 User본인 아이디 보내도록 수정 필요
                 hashMap.put("teamNo", id);
                 hashMap.put("boardUpper", id);
                 hashMap.put("boardComment", comment);
@@ -228,7 +229,7 @@ public class BoardActivity extends AppCompatActivity {
                     for(int i = 0; i < result.length(); i++)
                     {
                         obj = result.getJSONObject(i);
-                        commentData = new CommentData(obj.getString("teamNo"), obj.getString("boardComment"));
+                        commentData = new CommentData(obj.getString("teamNm"), obj.getString("boardComment"));
                         commentDatas.add(commentData);
 
                         boardCommentLayout.setData(commentDatas);
