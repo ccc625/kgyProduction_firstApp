@@ -314,7 +314,7 @@ public class NetworkAdaptor
 
         dest = ServerConfig.LOCAL + "/" + serviceName + "/" + serverMethod + ".do";
 
-        NetworkTask.NetworkCallback networkCallback = new NetworkTask.NetworkCallback() {
+        NetworkTask.NetworkTaskCallback networkCallback = new NetworkTask.NetworkTaskCallback() {
             @Override
             public void onResponse(JSONObject data)
             {

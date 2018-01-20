@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.kgy_product.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by ccc62 on 2018-01-13.
  */
@@ -26,6 +28,11 @@ public class BoardCommentLayout extends LinearLayout
 
     private ListView commentListView;
 
+    private ArrayList<CommentData> data;
+    private CommentListViewAdaptor commentListViewAdaptor;
+
+    private OnClickedSendButtonListener onClickedSendButtonListener;
+
     public BoardCommentLayout( Context context)
     {
         super(context);
@@ -33,6 +40,29 @@ public class BoardCommentLayout extends LinearLayout
         mContext = context;
 
         init();
+    }
+
+    public void setOnClickedSendButtonListener(OnClickedSendButtonListener listener)
+    {
+        if( listener == null )
+            return;
+
+        onClickedSendButtonListener = listener;
+    }
+
+    public void setData(ArrayList<CommentData> inData)
+    {
+        if( inData == null )
+            return;
+
+        data = inData;
+
+        setCommentList();
+    }
+
+    public void dispose()
+    {
+
     }
 
     private void init()
@@ -53,6 +83,12 @@ public class BoardCommentLayout extends LinearLayout
         commentListView = (ListView) rootLayout.findViewById(R.id.commentListView);
     }
 
+    private void setCommentList()
+    {
+        commentListViewAdaptor = new CommentListViewAdaptor(mContext, R.layout.board_comment_list_view, data);
+        commentListView.setAdapter(commentListViewAdaptor);
+    }
+
     private void initListener()
     {
         OnClickListener commentSendListener = new OnClickListener()
@@ -69,11 +105,14 @@ public class BoardCommentLayout extends LinearLayout
 
     private void sendComment()
     {
+        if(txtUserComment.getText().equals(""))
+            return;
 
+        onClickedSendButtonListener.onClickedSendButton(txtUserComment.getText().toString());
     }
 
-    public void dispose()
+    public interface OnClickedSendButtonListener
     {
-
+        void onClickedSendButton(String comment);
     }
 }
