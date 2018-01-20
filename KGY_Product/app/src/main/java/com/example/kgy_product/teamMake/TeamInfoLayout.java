@@ -7,13 +7,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.kgy_product.R;
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,7 +146,7 @@ public class TeamInfoLayout extends LinearLayout
 
         String alcoholNum = drunkQuantitySpinner.getSelectedItem().toString();
 
-        alcoholNum = alcoholNum.replace("병", "");
+        alcoholNum = alcoholNum.substring(0,1);
 
         result.put("al_num", alcoholNum);
         result.put("team_comment", txtComment.getText().toString());

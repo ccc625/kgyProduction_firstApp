@@ -1,15 +1,12 @@
 package com.example.kgy_product.teamMake;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.example.kgy_product.R;
 import com.example.kgy_product._enum.EGenderType;
@@ -167,7 +164,7 @@ public class MakeTeamLayout extends LinearLayout
 
         String teamMemberNum = memberCountSpinner.getSelectedItem().toString();
 
-        teamMemberNum = teamMemberNum.replace("명", "");
+        teamMemberNum = teamMemberNum.substring(0,1);
 
         result.put("team_number", teamMemberNum);
 
