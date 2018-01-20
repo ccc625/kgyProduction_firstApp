@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.util.BitmapUtil;
@@ -16,8 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -69,7 +67,7 @@ public class BoardActivity extends AppCompatActivity {
                 System.out.println("onCompleteScheduler");
 
                 ///* NOTE @jimin setBoardInfo테스트용 코드
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
                     @Override
                     public void onResponse(JSONObject data)
                     {
@@ -82,7 +80,7 @@ public class BoardActivity extends AppCompatActivity {
                 hashMap.put("boardUpper", teamNo);
                 hashMap.put("boardComment", "아아아아아아아아아아아");
 
-                NetworkdAdaptor.instance().setBoardInfo(networkCallback, hashMap);
+                NetworkAdaptor.instance().setBoardInfo(networkCallback, hashMap);
                 //*/
             }
         };
@@ -95,7 +93,7 @@ public class BoardActivity extends AppCompatActivity {
             @Override
             public void excute(final Callback callback)
             {
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback()
+                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback()
                 {
                     @Override
                     public void onResponse(JSONObject data)
@@ -135,7 +133,7 @@ public class BoardActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String id = intent.getStringExtra("id");
                 //팀상세정보
-                NetworkdAdaptor.instance().getTeamInfo(networkCallback,id);
+                NetworkAdaptor.instance().getTeamInfo(networkCallback,id);
             }
         };
 

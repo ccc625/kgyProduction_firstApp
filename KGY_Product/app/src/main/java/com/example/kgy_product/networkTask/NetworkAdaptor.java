@@ -10,15 +10,15 @@ import java.util.Map;
  * Created by ccc62 on 2017-08-26.
  */
 
-public class NetworkdAdaptor
+public class NetworkAdaptor
 {
-    private static NetworkdAdaptor _manager;
+    private static NetworkAdaptor _manager;
 
-    public static NetworkdAdaptor instance()
+    public static NetworkAdaptor instance()
     {
         if( _manager == null )
         {
-            _manager = new NetworkdAdaptor( new Singleton() );
+            _manager = new NetworkAdaptor( new Singleton() );
         }
 
         return _manager;
@@ -28,7 +28,7 @@ public class NetworkdAdaptor
 
     private Thread _taksThread;
 
-    public NetworkdAdaptor(Singleton singleton)
+    public NetworkAdaptor(Singleton singleton)
     {
         init();
     }

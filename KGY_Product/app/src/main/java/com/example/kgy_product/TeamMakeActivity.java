@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.teamMake.BottomLayout;
@@ -159,7 +159,7 @@ public class TeamMakeActivity extends AppCompatActivity
             @Override
             public void excute(final Callback callback)
             {
-                NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
                     @Override
                     public void onResponse(JSONObject data)
                     {
@@ -178,7 +178,7 @@ public class TeamMakeActivity extends AppCompatActivity
                     }
                 };
 
-                NetworkdAdaptor.instance().getCommonList(networkCallback, "ALCOHOL");
+                NetworkAdaptor.instance().getCommonList(networkCallback, "ALCOHOL");
             }
         };
 
@@ -292,7 +292,7 @@ public class TeamMakeActivity extends AppCompatActivity
                 }
                 else
                 {
-                    NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
+                    NetworkAdaptor.NetworkCallback callback = new NetworkAdaptor.NetworkCallback() {
                         @Override
                         public void onResponse(JSONObject data)
                         {
@@ -344,7 +344,7 @@ public class TeamMakeActivity extends AppCompatActivity
         }
     }
 
-    private void registerTeam(final NetworkdAdaptor.NetworkCallback inCallback)
+    private void registerTeam(final NetworkAdaptor.NetworkCallback inCallback)
     {
         HashMap<String, String> teamRegisterData = new HashMap<>();
 
@@ -385,7 +385,7 @@ public class TeamMakeActivity extends AppCompatActivity
 
         teamRegisterData.put("team_phone", phoneNumber);
 
-        NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
+        NetworkAdaptor.NetworkCallback callback = new NetworkAdaptor.NetworkCallback() {
             @Override
             public void onResponse(JSONObject data)
             {
@@ -403,7 +403,7 @@ public class TeamMakeActivity extends AppCompatActivity
             }
         };
 
-        NetworkdAdaptor.instance().setMakeRegister(callback, teamRegisterData);
+        NetworkAdaptor.instance().setMakeRegister(callback, teamRegisterData);
     }
 
     private void saveLogin(String id){

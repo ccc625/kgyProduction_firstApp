@@ -14,7 +14,7 @@ import android.widget.ListView;
 
 import com.example.kgy_product.areaSelect.AreaAdapter;
 import com.example.kgy_product.areaSelect.Areadata;
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
+import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             @Override
         public void excute(final Callback callback) {
 
-        NetworkdAdaptor.NetworkCallback networkCallback = new NetworkdAdaptor.NetworkCallback() {
+        NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
             @Override
             public void onResponse(final JSONObject data) {
                 try {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        NetworkdAdaptor.instance().getCommonList(networkCallback, "LOCATION");
+        NetworkAdaptor.instance().getCommonList(networkCallback, "LOCATION");
     }
     };
 
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity
             initDisplayObject();
             initListener();
 
-            NetworkdAdaptor.NetworkCallback callback = new NetworkdAdaptor.NetworkCallback() {
+            NetworkAdaptor.NetworkCallback callback = new NetworkAdaptor.NetworkCallback() {
                 @Override
                 public void onResponse(JSONObject data)
                 {

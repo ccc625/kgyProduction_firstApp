@@ -7,13 +7,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.kgy_product.R;
-import com.example.kgy_product.networkTask.NetworkdAdaptor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
