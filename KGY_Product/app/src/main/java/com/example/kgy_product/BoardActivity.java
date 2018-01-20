@@ -1,11 +1,15 @@
 package com.example.kgy_product;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.kgy_product.board.BoardCommentLayout;
+import com.example.kgy_product.board.CommentData;
 import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
@@ -16,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,11 +29,15 @@ import java.util.HashMap;
 
 public class BoardActivity extends AppCompatActivity {
 
+    private LinearLayout boardActivityLayout;
+
     private ImageView boardImgView;
     private TextView teamNameView;
     private TextView teamContext;
 
-    private String teamNo;
+    private BoardCommentLayout boardCommentLayout;
+
+    private String id;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,9 +45,8 @@ public class BoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
 
-        boardImgView = (ImageView)findViewById(R.id.WomemGroup);
-        teamNameView = (TextView)findViewById(R.id.TeamName);
-        teamContext = (TextView)findViewById(R.id.teamContext);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
 
         init();
     }
@@ -65,28 +73,35 @@ public class BoardActivity extends AppCompatActivity {
             public void onComplete()
             {
                 System.out.println("onCompleteScheduler");
-
-                ///* NOTE @jimin setBoardInfo테스트용 코드
-                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
-                    @Override
-                    public void onResponse(JSONObject data)
-                    {
-                        System.out.println(data.toString());
-                    }
-                };
-
-                HashMap<String, String> hashMap = new HashMap();
-                hashMap.put("teamNo", teamNo);
-                hashMap.put("boardUpper", teamNo);
-                hashMap.put("boardComment", "아아아아아아아아아아아");
-
-                NetworkAdaptor.instance().setBoardInfo(networkCallback, hashMap);
-                //*/
             }
         };
 
         Scheduler scheduler = new Scheduler(onCompleteScheduler);
         ScheduleNode node;
+
+        ScheduleNode.ScheduleAction initDisplayObjectAction = new ScheduleNode.ScheduleAction()
+        {
+            @Override
+            public void excute(Callback callback)
+            {
+                initDisplayObject();
+
+                callback.excute();
+            }
+        };
+        node = new ScheduleNode("initDisplayObjectAction", initDisplayObjectAction);
+        scheduler.add(node);
+
+        ScheduleNode.ScheduleAction initListenerAction = new ScheduleNode.ScheduleAction() {
+            @Override
+            public void excute(Callback callback) {
+                initListener();
+
+                callback.excute();
+            }
+        };
+        node = new ScheduleNode("initListenerAction", initListenerAction);
+        scheduler.add(node);
 
         ScheduleNode.ScheduleAction infoTeamInfoAction = new ScheduleNode.ScheduleAction()
         {
@@ -100,12 +115,9 @@ public class BoardActivity extends AppCompatActivity {
                     {
                         try
                         {
-                            JSONArray list = new JSONArray();
-                            list = data.getJSONArray("result");
-                            JSONObject obj = new JSONObject();
-                            obj = list.getJSONObject(0);
-                            boardImgView.setImageBitmap(BitmapUtil.getBitmapToString(obj.getString("imgFile")));
-                            teamNameView.setText(obj.getString("teamNm"));
+                            JSONArray list = data.getJSONArray("result");
+                            JSONObject obj = list.getJSONObject(0);
+
                             String reg = "";
                             if( Integer.parseInt(TimeUtil.termTime(obj.getString("regDate").toString())) > 60){
                                 int rd = Integer.parseInt(TimeUtil.termTime(obj.getString("regDate").toString()))/60;
@@ -118,8 +130,7 @@ public class BoardActivity extends AppCompatActivity {
                                             + reg+" 전부터 기다리는중..."
                                             +"\n우리는 "+obj.getString("teamYouComment").toString()+"을 원해요~!";
 
-                            teamNo = obj.getString("teamNo");
-                            teamContext.setText(context);
+                            setTeamInfo(BitmapUtil.getBitmapToString(obj.getString("imgFile")), obj.getString("teamNm"), context);
 
                             callback.excute();
                         }
@@ -130,16 +141,109 @@ public class BoardActivity extends AppCompatActivity {
                     }
                 };
 
-                Intent intent = getIntent();
-                String id = intent.getStringExtra("id");
                 //팀상세정보
                 NetworkAdaptor.instance().getTeamInfo(networkCallback,id);
             }
         };
-
         node = new ScheduleNode("infoTeamInfoAction",infoTeamInfoAction);
         scheduler.add(node);
 
+        ScheduleNode.ScheduleAction getBoardListAction = new ScheduleNode.ScheduleAction()
+        {
+            @Override
+            public void excute(final Callback callback)
+            {
+                refreshBoardList(callback);
+            }
+        };
+        node = new ScheduleNode("getBoardListAction", getBoardListAction);
+        scheduler.add(node);
+
         scheduler.start();
+    }
+
+    private void initListener()
+    {
+        BoardCommentLayout.OnClickedSendButtonListener onClickedSendButtonListener = new BoardCommentLayout.OnClickedSendButtonListener() {
+            @Override
+            public void onClickedSendButton(String comment)
+            {
+                NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
+                    @Override
+                    public void onResponse(JSONObject data)
+                    {
+                        System.out.println(data.toString());
+
+                        refreshBoardList(null);
+                    }
+                };
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("teamNo", id);
+                hashMap.put("boardUpper", id);
+                hashMap.put("boardComment", comment);
+
+                NetworkAdaptor.instance().setBoardInfo(networkCallback, hashMap);
+            }
+        };
+
+        boardCommentLayout.setOnClickedSendButtonListener(onClickedSendButtonListener);
+    }
+
+    private void initDisplayObject()
+    {
+        boardActivityLayout = (LinearLayout) findViewById(R.id.boardActivityLayout);
+
+        boardImgView = (ImageView)findViewById(R.id.WomemGroup);
+        teamNameView = (TextView)findViewById(R.id.TeamName);
+        teamContext = (TextView)findViewById(R.id.teamContext);
+
+        boardCommentLayout = new BoardCommentLayout(this);
+        boardActivityLayout.addView(boardCommentLayout);
+    }
+
+    private void setTeamInfo(Bitmap boardImage, String strTeamName, String strTeamContext)
+    {
+        boardImgView.setImageBitmap(boardImage);
+        teamNameView.setText(strTeamName);
+        teamContext.setText(strTeamContext);
+    }
+
+    private void refreshBoardList(final ScheduleNode.ScheduleAction.Callback callback)
+    {
+        NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback()
+        {
+            @Override
+            public void onResponse(JSONObject data)
+            {
+                System.out.println(data.toString());
+
+                try
+                {
+                    JSONArray result = data.getJSONArray("result");
+
+                    CommentData commentData;
+                    JSONObject obj;
+                    ArrayList<CommentData> commentDatas = new ArrayList<CommentData>();
+                    for(int i = 0; i < result.length(); i++)
+                    {
+                        obj = result.getJSONObject(i);
+                        commentData = new CommentData(obj.getString("teamNo"), obj.getString("boardComment"));
+                        commentDatas.add(commentData);
+
+                        boardCommentLayout.setData(commentDatas);
+                    }
+                }
+                catch(JSONException exception)
+                {
+                    exception.printStackTrace();
+                }
+
+                if( callback != null)
+                    callback.excute();
+            }
+        };
+
+        NetworkAdaptor.instance().getBoardList(networkCallback, id);
     }
 }
