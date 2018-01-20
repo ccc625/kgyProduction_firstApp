@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initDisplayObject()
     {
-        btnSelectPlace0 = (Button) findViewById(R.id.btnSelectPlace0);
+        //btnSelectPlace0 = (Button) findViewById(R.id.btnSelectPlace0);
 
     }
 
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                switch (view.getId()){
+               /* switch (view.getId()){
                     case R.id.btnSelectPlace0:
                         try{
 
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity
                         }catch (Exception e) {
                             e.printStackTrace();
                         }
-                }
+                }*/
             }
 
 
