@@ -108,8 +108,16 @@ public class BoardActivity extends AppCompatActivity {
                             obj = list.getJSONObject(0);
                             boardImgView.setImageBitmap(BitmapUtil.getBitmapToString(obj.getString("imgFile")));
                             teamNameView.setText(obj.getString("teamNm"));
+                            String reg = "";
+                            if( Integer.parseInt(TimeUtil.termTime(obj.getString("regDate").toString())) > 60){
+                                int rd = Integer.parseInt(TimeUtil.termTime(obj.getString("regDate").toString()))/60;
+                                reg = rd+"시간";
+                            } else {
+                                reg = Integer.parseInt(TimeUtil.termTime(obj.getString("regDate").toString()))+"분";
+                            }
+
                             String context = obj.getString("teamComment").toString()+"이 "+obj.getString("teamNumber").toString()+"명이서"
-                                            + TimeUtil.termTime(obj.getString("regDate").toString())+"분 전부터 기다리는중..."
+                                            + reg+" 전부터 기다리는중..."
                                             +"\n우리는 "+obj.getString("teamYouComment").toString()+"을 원해요~!";
 
                             teamNo = obj.getString("teamNo");
