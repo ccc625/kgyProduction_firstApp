@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kgy_product.BitmapUtil;
+import com.example.kgy_product.util.BitmapUtil;
 import com.example.kgy_product.BoardActivity;
 import com.example.kgy_product.R;
 
