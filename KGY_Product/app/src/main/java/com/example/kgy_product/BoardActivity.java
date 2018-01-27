@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.kgy_product.board.BoardCommentLayout;
@@ -13,6 +17,7 @@ import com.example.kgy_product.board.CommentData;
 import com.example.kgy_product.networkTask.NetworkAdaptor;
 import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
+import com.example.kgy_product.user.User;
 import com.example.kgy_product.util.BitmapUtil;
 import com.example.kgy_product.util.TimeUtil;
 
@@ -29,11 +34,15 @@ import java.util.HashMap;
 
 public class BoardActivity extends AppCompatActivity {
 
-    private LinearLayout boardActivityLayout;
+    private ScrollView boardCommentScroll;
 
     private ImageView boardImgView;
     private TextView teamNameView;
     private TextView teamContext;
+
+    private TextView txtUserName;
+    private EditText txtUserComment;
+    private Button btnCommentSend;
 
     private BoardCommentLayout boardCommentLayout;
 
@@ -164,9 +173,10 @@ public class BoardActivity extends AppCompatActivity {
 
     private void initListener()
     {
-        BoardCommentLayout.OnClickedSendButtonListener onClickedSendButtonListener = new BoardCommentLayout.OnClickedSendButtonListener() {
+        View.OnClickListener commentSendListener = new View.OnClickListener()
+        {
             @Override
-            public void onClickedSendButton(String comment)
+            public void onClick(View v)
             {
                 NetworkAdaptor.NetworkCallback networkCallback = new NetworkAdaptor.NetworkCallback() {
                     @Override
@@ -174,33 +184,41 @@ public class BoardActivity extends AppCompatActivity {
                     {
                         System.out.println(data.toString());
 
+                        txtUserComment.setText("");
+
                         refreshBoardList(null);
                     }
                 };
 
                 HashMap<String, String> hashMap = new HashMap<>();
-                ///TODO @jimin teamNo에 User본인 아이디 보내도록 수정 필요
-                hashMap.put("teamNo", id);
+
+                hashMap.put("teamNo", User.instance().getId());
                 hashMap.put("boardUpper", id);
-                hashMap.put("boardComment", comment);
+                hashMap.put("boardComment", txtUserComment.getText().toString());
 
                 NetworkAdaptor.instance().setBoardInfo(networkCallback, hashMap);
             }
         };
 
-        boardCommentLayout.setOnClickedSendButtonListener(onClickedSendButtonListener);
+        btnCommentSend.setOnClickListener(commentSendListener);
     }
 
     private void initDisplayObject()
     {
-        boardActivityLayout = (LinearLayout) findViewById(R.id.boardActivityLayout);
+        boardCommentScroll = (ScrollView) findViewById(R.id.boardCommentScroll);
 
         boardImgView = (ImageView)findViewById(R.id.WomemGroup);
         teamNameView = (TextView)findViewById(R.id.TeamName);
         teamContext = (TextView)findViewById(R.id.teamContext);
 
+        txtUserName = (TextView)  findViewById(R.id.txtUserName);
+        txtUserComment = (EditText) findViewById(R.id.txtUserComment);
+        btnCommentSend = (Button) findViewById(R.id.btnCommentSend);
+
         boardCommentLayout = new BoardCommentLayout(this);
-        boardActivityLayout.addView(boardCommentLayout);
+        boardCommentScroll.addView(boardCommentLayout);
+
+        txtUserName.setText(User.instance().getName());
     }
 
     private void setTeamInfo(Bitmap boardImage, String strTeamName, String strTeamContext)
@@ -231,9 +249,9 @@ public class BoardActivity extends AppCompatActivity {
                         obj = result.getJSONObject(i);
                         commentData = new CommentData(obj.getString("teamNm"), obj.getString("boardComment"));
                         commentDatas.add(commentData);
-
-                        boardCommentLayout.setData(commentDatas);
                     }
+
+                    boardCommentLayout.setData(commentDatas);
                 }
                 catch(JSONException exception)
                 {

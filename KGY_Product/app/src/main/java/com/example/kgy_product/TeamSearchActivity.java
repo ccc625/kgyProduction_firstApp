@@ -13,6 +13,7 @@ import com.example.kgy_product.scheduler.ScheduleNode;
 import com.example.kgy_product.scheduler.Scheduler;
 import com.example.kgy_product.teamSearch.TeamData;
 import com.example.kgy_product.teamSearch.TeamSearchListAdapter;
+import com.example.kgy_product.user.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,7 +108,7 @@ public class TeamSearchActivity extends AppCompatActivity
                 Intent intent = getIntent();
 
                 HashMap<String, Object> map = new HashMap<>();
-                map.put("id", intent.getStringExtra("id"));
+                map.put("id", User.instance().getId());
                 map.put("search", "");
 
                 NetworkAdaptor.instance().getTeamList(networkCallback, map);

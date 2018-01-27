@@ -2,7 +2,6 @@ package com.example.kgy_product;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ import com.example.kgy_product.teamMake.BottomLayout;
 import com.example.kgy_product.teamMake.ImageSelectLayout;
 import com.example.kgy_product.teamMake.MakeTeamLayout;
 import com.example.kgy_product.teamMake.TeamInfoLayout;
+import com.example.kgy_product.user.User;
 import com.example.kgy_product.util.BitmapUtil;
 
 import org.json.JSONArray;
@@ -29,8 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -391,8 +389,9 @@ public class TeamMakeActivity extends AppCompatActivity
             {
                 try {
                     if(data.getBoolean("success") == true){
-                        String id = (String)data.getJSONArray("result").get(0);
-                        saveLogin(id);
+                        User.instance().setUser((String)data.getJSONArray("result").get(0), (String)data.getJSONArray("result").get(1), getApplicationContext());
+
+                        startTeamSearchActivity();
                     } else {
 
                     }
@@ -406,29 +405,10 @@ public class TeamMakeActivity extends AppCompatActivity
         NetworkAdaptor.instance().setMakeRegister(callback, teamRegisterData);
     }
 
-    private void saveLogin(String id){
-        try {
-            SharedPreferences setting = getSharedPreferences("setting",MODE_PRIVATE);
-            SharedPreferences.Editor editor = setting.edit();
-
-            Date date = new Date();
-
-            SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMdd");
-            String nowDate = sdf.format(date);
-
-            editor.putString("date",nowDate);
-            editor.putString("id",id);
-            editor.commit();
-
-
-            Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
-            intent.putExtra("id",id);
-            startActivity(intent);
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
+    private void startTeamSearchActivity()
+    {
+        Intent intent = new Intent(getApplicationContext(),TeamSearchActivity.class);
+        startActivity(intent);
     }
 
     private void removeListener()

@@ -30,4 +30,39 @@ public class TimeUtil
 
         return String.valueOf(minute);
     }
+
+    public static String nowDate()
+    {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+
+        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy/MM/dd/HH/mm");
+        String nowDate = sdf.format(date);
+
+        String result = "";
+
+        if(Integer.parseInt(nowDate.split("/")[3]) <= 6){
+            for(int i = 0; i < nowDate.split("/").length; i++){
+                if(i == 1){
+                    int mm = Integer.parseInt(nowDate.split("/")[i]) - 1;
+                    result += String.valueOf(mm);
+                } else if(i > 2){
+                    break;
+                }
+                else {
+                    result += nowDate.split("/")[i];
+                }
+            }
+        } else {
+            for(int i = 0; i < nowDate.split("/").length; i++){
+                if(i > 2){
+                    break;
+                } else {
+                    result += nowDate.split("/")[i];
+                }
+            }
+        }
+
+        return result;
+    }
 }

@@ -22,16 +22,10 @@ public class BoardCommentLayout extends LinearLayout
 
     private LinearLayout rootLayout;
 
-    private TextView txtUserName;
-    private EditText txtUserComment;
-    private Button btnCommentSend;
-
     private ListView commentListView;
 
     private ArrayList<CommentData> data;
     private CommentListViewAdaptor commentListViewAdaptor;
-
-    private OnClickedSendButtonListener onClickedSendButtonListener;
 
     public BoardCommentLayout( Context context)
     {
@@ -40,14 +34,6 @@ public class BoardCommentLayout extends LinearLayout
         mContext = context;
 
         init();
-    }
-
-    public void setOnClickedSendButtonListener(OnClickedSendButtonListener listener)
-    {
-        if( listener == null )
-            return;
-
-        onClickedSendButtonListener = listener;
     }
 
     public void setData(ArrayList<CommentData> inData)
@@ -76,10 +62,6 @@ public class BoardCommentLayout extends LinearLayout
         rootLayout = (LinearLayout) inflate( mContext, R.layout.board_comment_layout, null );
         addView( rootLayout, new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT ) );
 
-        txtUserName = (TextView) rootLayout.findViewById(R.id.txtUserName);
-        txtUserComment = (EditText) rootLayout.findViewById(R.id.txtUserComment);
-        btnCommentSend = (Button) rootLayout.findViewById(R.id.btnCommentSend);
-
         commentListView = (ListView) rootLayout.findViewById(R.id.commentListView);
     }
 
@@ -91,28 +73,6 @@ public class BoardCommentLayout extends LinearLayout
 
     private void initListener()
     {
-        OnClickListener commentSendListener = new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                sendComment();
-            }
-        };
 
-        btnCommentSend.setOnClickListener(commentSendListener);
-    }
-
-    private void sendComment()
-    {
-        if(txtUserComment.getText().equals(""))
-            return;
-
-        onClickedSendButtonListener.onClickedSendButton(txtUserComment.getText().toString());
-    }
-
-    public interface OnClickedSendButtonListener
-    {
-        void onClickedSendButton(String comment);
     }
 }
